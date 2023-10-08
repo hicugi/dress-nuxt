@@ -31,7 +31,7 @@ export default {
       <div class="relative block h-128 rounded-xl overflow-hidden">
         <v-lazy-image
           class="group-hover:scale-110 transform duration-1000 object-cover w-full h-full"
-          src-placeholder="~/assets/placeholder.gif"
+          src-placeholder="/img/placeholder.gif"
           :src="dress?.photo[0]?.image || ''"
           :alt="dress.title"
         />

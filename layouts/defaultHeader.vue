@@ -33,13 +33,13 @@ export default {
   <header class="container px-5 py-3 <sm:py-3 mx-auto">
     <nav>
       <div class="flex flex-wrap justify-between items-center mx-auto">
-        <a href="/" class="flex items-center">
+        <NuxtLink :to="localePath('/rent')" class="flex items-center">
           <img
             src="~/assets/logo.svg"
             class="h-12 <sm:h-7"
             alt="Прокат платьев Gatsby"
           />
-        </a>
+        </NuxtLink>
         <div class="flex items-center lg:order-2">
           <!-- <DropDown
             v-if="currentCurrency"

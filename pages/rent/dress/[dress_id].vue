@@ -18,7 +18,7 @@ export default {
   created() {
     this.getDress({ dress_id: this.$route.params.dress_id || undefined }).then(
       ({ title }) => {
-        document.title = title;
+        //document.title = title;
       }
     );
   },
@@ -39,7 +39,7 @@ export default {
         <div class="grid gap-4 <sm:gap-2 md:grid-cols-1">
           <v-lazy-image
             class="aspect-square w-full h-250 <sm:h-130 rounded-xl object-cover"
-            src-placeholder="~/assets/placeholder.gif"
+            src-placeholder="/img/placeholder.gif"
             :src="dress.photo[photoSelectedIndex].image"
             :alt="dress.title"
           />
@@ -47,7 +47,7 @@ export default {
             <li v-for="(photo, key) in dress.photo" :key="key" class="h-50">
               <v-lazy-image
                 :src="photo.image"
-                src-placeholder="~/assets/placeholder.gif"
+                src-placeholder="/img/placeholder.gif"
                 class="aspect-square w-full h-full rounded-xl object-cover cursor-pointer"
                 @click="photoSelectedIndex = key"
               />

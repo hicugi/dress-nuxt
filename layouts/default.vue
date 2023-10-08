@@ -1,5 +1,5 @@
 <script>
-import Header from "./Header.vue";
+import Header from "./defaultHeader.vue";
 
 export default {
   components: {
@@ -13,6 +13,6 @@ export default {
 <template>
   <div>
     <Header />
-    <NuxtPage />
+    <slot />
   </div>
 </template>
