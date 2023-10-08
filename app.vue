@@ -5,7 +5,6 @@
       <template #error="{ error }">
         <p>An error occurred: {{ error }}</p>
       </template>
-
       <NuxtPage :key="$route.fullPath" />
     </NuxtErrorBoundary>
   </NuxtLayout>

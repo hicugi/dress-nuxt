@@ -33,7 +33,14 @@ export default {
   <header class="container px-5 py-3 <sm:py-3 mx-auto">
     <nav>
       <div class="flex flex-wrap justify-between items-center mx-auto">
-        <NuxtLink :to="localePath('/rent')" class="flex items-center">
+        <NuxtLink
+          :to="
+            localePath({
+              name: 'rent',
+            })
+          "
+          class="flex items-center"
+        >
           <img
             src="~/assets/logo.svg"
             class="h-12 <sm:h-7"

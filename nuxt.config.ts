@@ -14,6 +14,9 @@
 // };
 
 export default defineNuxtConfig({
+  // app: {
+  //   pageTransition: { name: "page", mode: "out-in" },
+  // },
   routeRules: {
     "/": { redirect: "/rent" },
   },
@@ -36,6 +39,8 @@ export default defineNuxtConfig({
       },
     },
   },
+  vite: { build: { minify: true } },
+  ssr: true,
   // runtimeConfig: {
   //   public: {
   //     API_URL: process.env.API_URL || "http://localhost/api/",
