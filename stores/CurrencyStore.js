@@ -6,10 +6,10 @@ export const useCurrencyStore = defineStore("currency-store", {
     currencies: [],
     currentCurrency: null,
     currentCode: process.client
-      ? localStorage.getItem("currencyCode") ||
-        import.meta.env.VITE_DEFAULT_CURRENCE_CODE ||
+      ? localStorage.getItem("currencyCode") ??
+        process.env.NUXT_DEFAULT_CURRENCE_CODE ??
         "USD"
-      : "USD",
+      : process.env.NUXT_DEFAULT_CURRENCE_CODE ?? "USD",
     errors: [],
     error: [],
   }),
@@ -39,7 +39,7 @@ export const useCurrencyStore = defineStore("currency-store", {
         });
     },
     setCurrency(currency, redirect = true) {
-      localStorage.setItem("currencyCode", currency.code);
+      if (process.client) localStorage.setItem("currencyCode", currency.code);
 
       if (redirect) this.router.push({ params: { currency: currency.code } });
 

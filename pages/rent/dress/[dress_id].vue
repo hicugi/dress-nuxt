@@ -1,9 +1,9 @@
 <script>
+import { mapActions, mapState } from "pinia";
+import { useCurrencyStore } from "~/stores/CurrencyStore.js";
 import { useDressCatalog } from "~/stores/DressCatalog";
 import DressBook from "~/components/catalog/DressBook.vue";
-import { mapActions, mapState } from "pinia";
 import VLazyImage from "v-lazy-image";
-import { useI18n } from "#imports";
 
 export default {
   components: {
@@ -16,16 +16,27 @@ export default {
     };
   },
   created() {
-    this.getDress({ dress_id: this.$route.params.dress_id || undefined }).then(
-      ({ title }) => {
-        //document.title = title;
-      }
-    );
+    if (!this.currencies.length) this.loadCurrencies;
+
+    this.getDress({
+      dress_id: this.$route.params.dress_id || undefined,
+    }).then(({ title, description, photo }) => {
+      useSeoMeta({
+        title,
+        description,
+        ogTitle: title,
+        ogDescription: description,
+        ogImage: photo?.[0],
+        twitterCard: "summary_large_image",
+      });
+    });
   },
   methods: {
+    ...mapActions(useCurrencyStore, ["loadCurrencies"]),
     ...mapActions(useDressCatalog, ["getDress", "saveBooking"]),
   },
   computed: {
+    ...mapState(useCurrencyStore, ["currentCurrency", "currencies"]),
     ...mapState(useDressCatalog, ["dress"]),
   },
 };
@@ -79,7 +90,7 @@ export default {
           <form class="mt-4">
             <fieldset class="flex" v-if="dress.color.length">
               <legend class="mb-1 text-sm font-medium contents">
-                {{ useI18n().t("rent.dress_color") }}:&nbsp;
+                {{ $t("rent.dress_color") }}:&nbsp;
               </legend>
               <label
                 v-for="color in dress.color"
@@ -102,7 +113,7 @@ export default {
 
             <fieldset v-if="dress.size.length" class="mt-4 flex">
               <legend class="text-sm font-medium contents">
-                {{ useI18n().t("rent.dress_size") }}:
+                {{ $t("rent.dress_size") }}:
               </legend>
               <label
                 v-for="size in dress.size"
@@ -125,20 +136,19 @@ export default {
             </fieldset>
 
             <div class="mt-4 flex gap-2">
-              <p class="text-sm font-medium">
-                {{ useI18n().t("rent.dress_price") }}:
-              </p>
+              <p class="text-sm font-medium">{{ $t("rent.dress_price") }}:</p>
               <p class="text-sm">
-                ₸{{
+                {{ currentCurrency ? currentCurrency.symbol : "" }}
+                {{
                   dress.price
                     .toLocaleString("kk", {
-                      style: "currency",
-                      currency: "KZT",
+                      //style: "currency",
+                      //currency: currencyCode,
                       minimumFractionDigits: Math.ceil(dress.price % 1) * 2,
                     })
                     .replace(" ", ",")
                 }}
-                / {{ useI18n().t("rent.dress_price_in_day") }}
+                / {{ $t("rent.dress_price_in_day") }}
               </p>
             </div>
 

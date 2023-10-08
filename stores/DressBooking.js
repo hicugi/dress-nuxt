@@ -9,8 +9,10 @@ export const useDressBooking = defineStore("dress-booking", {
     form: {
       dress_id: "",
       quantity: 1,
-      email: localStorage.getItem("email") ?? "",
-      phone_number: localStorage.getItem("phone_number") ?? "",
+      email: process.client ? localStorage.getItem("email") ?? "" : "",
+      phone_number: process.client
+        ? localStorage.getItem("phone_number") ?? ""
+        : "",
     },
     success: null,
     errors: [],
@@ -60,8 +62,10 @@ export const useDressBooking = defineStore("dress-booking", {
             booking: response.data.data,
             success: true,
           });
-          localStorage.setItem("email", this.form.email);
-          localStorage.setItem("phone_number", this.form.phone_number);
+          if (process.client) {
+            localStorage.setItem("email", this.form.email);
+            localStorage.setItem("phone_number", this.form.phone_number);
+          }
         })
         .catch((error) => {
           this.errors = error.response.data.errors;

@@ -1,3 +1,11 @@
+<script setup lang="ts">
+useHead({
+  titleTemplate: (titleChunk) => {
+    return titleChunk ? `${titleChunk} - Gatsby` : "Gatsby";
+  },
+});
+</script>
+
 <template>
   <NuxtLayout>
     <NuxtLoadingIndicator />

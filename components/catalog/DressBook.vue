@@ -3,7 +3,6 @@ import { useDressBooking } from "~/stores/DressBooking";
 import { mapActions, mapState, mapWritableState } from "pinia";
 import VueTailwindDatepicker from "vue-tailwind-datepicker";
 import FormErrors from "~/components/FormErrors.vue";
-import { useI18n } from "#imports";
 
 export default {
   components: {
@@ -18,7 +17,7 @@ export default {
   },
   data() {
     return {
-      frontURL: import.meta.env.VITE_FRONT_URL || "http://localhost:5173",
+      frontURL: process.env.NUXT_FRONT_URL ?? "http://localhost:3000",
     };
   },
   async mounted() {
@@ -44,18 +43,13 @@ export default {
     ]),
     ...mapWritableState(useDressBooking, ["date"]),
   },
-  // watch: {
-  //   date(value) {
-  //     console.log(value);
-  //   },
-  // },
 };
 </script>
 
 <template>
   <div v-if="success" class="text-green-500 text-sm">
-    {{ useI18n().t("rent.dress_booking_save_success") }}
-    {{ useI18n().t("rent.dress_booking_save_success_send_to_messenger") }}:
+    {{ $t("rent.dress_booking_save_success") }}
+    {{ $t("rent.dress_booking_save_success_send_to_messenger") }}:
     <div class="block">
       <br />
       <a
@@ -63,7 +57,7 @@ export default {
           'https://wa.me/' +
           booking.dress.user.phone +
           '/' +
-          `?text=${frontURL}/${useI18n().locale}/dress/${dress_id}%0A` +
+          `?text=${frontURL}/${useI18n()?.locale?.value}/dress/${dress_id}%0A` +
           `booking_id: ${booking.booking_id}%0A` +
           `date: ${booking.date}%0A` +
           `email: ${booking.email}%0A` +
@@ -72,23 +66,17 @@ export default {
         target="_blank"
         class="rounded bg-green-600 px-5 py-3 text-white hover:bg-green-500 text-sm"
       >
-        {{
-          useI18n().t(
-            "rent.dress_booking_save_success_send_to_messenger_button"
-          )
-        }}
+        {{ $t("rent.dress_booking_save_success_send_to_messenger_button") }}
       </a>
     </div>
   </div>
   <div v-else="success">
-    <div class="mb-3 text-sm">
-      {{ useI18n().t("rent.dress_booking_form_title") }}:
-    </div>
+    <div class="mb-3 text-sm">{{ $t("rent.dress_booking_form_title") }}:</div>
     <FormErrors :error="errors.dress_id" />
 
     <div class="mt-5 text-sm">
       <FormErrors :error="errors.quantity" />
-      {{ useI18n().t("rent.dress_booking_quantity") }}:
+      {{ $t("rent.dress_booking_quantity") }}:
       <input
         v-model="form.quantity"
         type="number"
@@ -100,13 +88,13 @@ export default {
         min="1"
         max="100"
       />
-      {{ useI18n().t("rent.dress_booking_quantity_available") }}:
+      {{ $t("rent.dress_booking_quantity_available") }}:
       <span :class="date ? 'text-green-500' : 'text-red-500'">
         {{
           this.date
             ? this.bookings.find((item) => item.date === this.date).booking[0]
                 .free
-            : useI18n().t("rent.dress_booking_quantity_select_date") + ":"
+            : $t("rent.dress_booking_quantity_select_date") + ":"
         }}
       </span>
     </div>
@@ -121,7 +109,7 @@ export default {
         v-model="date"
         :disable-date="getBusyDates"
         :formatter="{ date: 'YYYY-MM-DD', month: 'MMM' }"
-        :i18n="useI18n().locale"
+        :i18n="useI18n()?.locale?.value || 'en'"
       />
     </div>
 
@@ -134,7 +122,7 @@ export default {
           name="email"
           id="email"
           class="block p-2 w-70 rounded-md border-1 bg-gray-0 border-gray-300 text-gray-900 text-sm w-half hover:bg-gray-50 hover:text-gray-700 focus:bg-gray-50"
-          :placeholder="useI18n().t('rent.dress_booking_enter_email')"
+          :placeholder="$t('rent.dress_booking_enter_email')"
           required
         />
       </div>
@@ -147,7 +135,7 @@ export default {
           name="phone_number"
           id="phone_number"
           class="block p-2 w-70 rounded-md border-1 bg-gray-0 border-gray-300 text-gray-900 text-sm w-half hover:bg-gray-50 hover:text-gray-700 focus:bg-gray-50"
-          :placeholder="useI18n().t('rent.dress_booking_enter_phone_number')"
+          :placeholder="$t('rent.dress_booking_enter_phone_number')"
           required
         />
       </div>
@@ -158,7 +146,7 @@ export default {
         class="block rounded bg-green-600 px-5 py-3 text-white hover:bg-green-500"
         @click="this.saveBooking"
       >
-        {{ useI18n().t("rent.dress_booking_button_title") }}
+        {{ $t("rent.dress_booking_button_title") }}
       </button>
     </div>
   </div>

@@ -36,8 +36,8 @@ export default {
       title: useI18n().t("content.common_title"),
       description: useI18n().t("content.common_title"),
     });
-    if (!this.dresses.length) this.loadDressCatalog();
-    if (!this.categories.length) this.loadCategories();
+    this.loadDressCatalog();
+    this.loadCategories();
   },
 };
 </script>

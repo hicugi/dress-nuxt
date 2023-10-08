@@ -1,16 +1,12 @@
 import { defineStore } from "pinia";
-//import { useAPIFetch } from "~/composables/useApiFetch.ts";
 import axios from "~/composables/useApi";
 
 export const useLangStore = defineStore("lang-store", {
   state: () => ({
     languages: [],
     currentLang: null,
-    currentLocale: process.client
-      ? localStorage.getItem("local") ||
-        import.meta.env.VITE_DEFAULT_LOCALE ||
-        "en"
-      : "en",
+    currentLocale:
+      useI18n()?.locale?.value ?? process.env.NUXT_DEFAULT_LOCALE ?? "en",
     errors: [],
     error: [],
   }),
@@ -36,10 +32,24 @@ export const useLangStore = defineStore("lang-store", {
         });
     },
     setLocale(lang, redirect = true) {
-      localStorage.setItem("locale", lang.locale);
-      if (redirect) this.router.push({ params: { locale: lang.locale } });
-      if (this.i18n.locale !== lang.locale) this.i18n.locale = lang.locale;
-      if (this.currentLocale !== lang.locale) this.currentLocale = lang.locale;
+      console.log(this.navigateTo);
+      console.log("prev", this.currentLocale);
+      if (this.currentLocale !== lang.locale) {
+        this.currentLocale = lang.locale;
+        console.log(this.currentLocale, redirect);
+
+        if (process.client) localStorage.setItem("locale", lang.locale);
+
+        if (redirect) {
+          const switchLocalePath = useSwitchLocalePath();
+          const router = useRouter();
+
+          router
+            .push(switchLocalePath(lang.locale))
+            .catch((e) => console.log(e));
+        }
+        // if (this.i18n.locale !== lang.locale) this.i18n.locale = lang.locale;
+      }
     },
   },
 });

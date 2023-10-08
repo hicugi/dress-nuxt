@@ -14,23 +14,56 @@
 // };
 
 export default defineNuxtConfig({
-  // app: {
-  //   pageTransition: { name: "page", mode: "out-in" },
-  // },
+  app: {
+    head: {
+      charset: "utf-8",
+      viewport: "width=device-width, initial-scale=1",
+    },
+    //pageTransition: { name: "page", mode: "out-in" },
+    //work but with bugs
+  },
   routeRules: {
     "/": { redirect: "/rent" },
   },
-  devtools: { enabled: false },
+  devtools: { enabled: true },
   modules: ["@pinia/nuxt", "nuxt-windicss", "@nuxtjs/i18n"],
   alias: {
     pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs",
   },
   i18n: {
-    locales: ["en", "ru", "kk"],
+    lazy: true,
+    langDir: "locales",
+    locales: [
+      {
+        code: "en",
+        file: "en.json",
+      },
+      {
+        code: "ru",
+        file: "ru.json",
+      },
+      {
+        code: "kk",
+        file: "kk.json",
+      },
+    ],
     defaultLocale: "en",
     strategy: "prefix",
     vueI18n: "./i18n.config.ts",
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: "i18n",
+      redirectOn: "root",
+    },
   },
+  // imports: {
+  //   presets: [
+  //     {
+  //       from: "vue-i18n",
+  //       imports: ["useI18n"],
+  //     },
+  //   ],
+  // },
   windicss: {
     preflight: {
       alias: {
