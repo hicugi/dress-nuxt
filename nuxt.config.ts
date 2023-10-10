@@ -1,4 +1,4 @@
-//import axios from "./composables/useApi.js";
+import axios from "./composables/useApi.js";
 
 // const loadLanguages = async () => {
 //   return await axios()
@@ -26,7 +26,12 @@ export default defineNuxtConfig({
     "/": { redirect: "/rent" },
   },
   devtools: { enabled: false },
-  modules: ["@pinia/nuxt", "nuxt-windicss", "@nuxtjs/i18n"],
+  modules: [
+    "@pinia/nuxt",
+    "nuxt-windicss",
+    "@nuxtjs/i18n",
+    "nuxt-simple-sitemap",
+  ],
   alias: {
     pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs",
   },
@@ -74,9 +79,30 @@ export default defineNuxtConfig({
   },
   vite: { build: { minify: true } },
   ssr: true,
-  // runtimeConfig: {
-  //   public: {
-  //     API_URL: process.env.API_URL || "http://localhost/api/",
-  //   },
-  // },
+  sitemap: {
+    enabled: true,
+    autoI18n: true,
+    xsl: false,
+    //sitemaps: true,
+    urls: async () => {
+      const { data } = await axios().get(
+        "v1/client/rent/dress/list?per_page=100",
+        {
+          params: {
+            //category_id: this.category.category_id,
+            //lang,
+            //currency,
+          },
+        }
+      );
+
+      return data.data.map((dress) => ({
+        loc: `rent/dress/${dress.dress_id}`,
+        lastmod: dress.updated_at,
+        changefreq: "weekly",
+        priority: 0.8,
+        image: dress.photo,
+      }));
+    },
+  },
 });
