@@ -43,11 +43,6 @@ export default {
     ]),
     ...mapWritableState(useDressBooking, ["date"]),
   },
-  watch: {
-    date(value) {
-      console.log(value);
-    },
-  },
 };
 </script>
 
