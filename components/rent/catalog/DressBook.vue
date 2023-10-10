@@ -17,7 +17,7 @@ export default {
   },
   data() {
     return {
-      frontURL: process.env.NUXT_FRONT_URL ?? "http://localhost:3000",
+      frontURL: process.env.NUXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
     };
   },
   async mounted() {

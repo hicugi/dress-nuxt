@@ -79,19 +79,14 @@ export default defineNuxtConfig({
   },
   vite: { build: { minify: true } },
   ssr: true,
-  // runtimeConfig: {
-  //   public: {
-  //     API_URL: process.env.API_URL || "http://localhost/api/",
-  //   },
-  // },
   sitemap: {
     enabled: true,
     autoI18n: true,
-    //xsl: true,
+    xsl: false,
     //sitemaps: true,
     urls: async () => {
       const { data } = await axios().get(
-        "http://localhost/api/v1/client/rent/dress/list?per_page=100",
+        "v1/client/rent/dress/list?per_page=100",
         {
           params: {
             //category_id: this.category.category_id,
