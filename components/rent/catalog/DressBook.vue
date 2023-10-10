@@ -43,6 +43,11 @@ export default {
     ]),
     ...mapWritableState(useDressBooking, ["date"]),
   },
+  watch: {
+    date(value) {
+      console.log(value);
+    },
+  },
 };
 </script>
 
@@ -99,21 +104,18 @@ export default {
       </span>
     </div>
 
-    <ClientOnly>
-      <div class="mt-5">
-        <FormErrors :error="errors.date" />
-        <VueTailwindDatepicker
-          v-if="bookings.length"
-          :key="datepikerKey"
-          no-input
-          as-single
-          v-model="date"
-          :disable-date="getBusyDates"
-          :formatter="{ date: 'YYYY-MM-DD', month: 'MMM' }"
-          :i18n="useI18n()?.locale?.value || 'en'"
-        />
-      </div>
-    </ClientOnly>
+    <div class="mt-5">
+      <FormErrors :error="errors.date" />
+      <VueTailwindDatepicker
+        no-input
+        as-single
+        :key="datepikerKey"
+        v-model="date"
+        :disable-date="getBusyDates"
+        :formatter="{ date: 'YYYY-MM-DD', month: 'MMM' }"
+        :i18n="useI18n()?.locale?.value || 'en'"
+      />
+    </div>
 
     <div class="mt-5">
       <FormErrors :error="errors.email" />

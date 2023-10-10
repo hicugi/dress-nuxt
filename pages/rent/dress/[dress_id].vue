@@ -2,7 +2,7 @@
 import { mapActions, mapState } from "pinia";
 import { useCurrencyStore } from "~/stores/CurrencyStore.js";
 import { useDressCatalog } from "~/stores/DressCatalog";
-import DressBook from "~/components/catalog/DressBook.vue";
+import DressBook from "~/components/rent/catalog/DressBook.vue";
 import VLazyImage from "v-lazy-image";
 
 export default {

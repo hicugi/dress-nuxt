@@ -1,6 +1,6 @@
 <script>
 import DropDown from "~/components/DropDown.vue";
-import ItemDressCatalog from "~/components/catalog/ItemDressCatalog.vue";
+import ItemDressCatalog from "~/components/rent/catalog/ItemDressCatalog.vue";
 import { mapActions, mapState, mapWritableState } from "pinia";
 import { useDressCatalog } from "~/stores/DressCatalog";
 import VueTailwindDatepicker from "vue-tailwind-datepicker";
