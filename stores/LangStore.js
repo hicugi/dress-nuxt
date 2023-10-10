@@ -32,24 +32,21 @@ export const useLangStore = defineStore("lang-store", {
         });
     },
     setLocale(lang, redirect = true) {
-      console.log(this.navigateTo);
-      console.log("prev", this.currentLocale);
-      if (this.currentLocale !== lang.locale) {
-        this.currentLocale = lang.locale;
-        console.log(this.currentLocale, redirect);
+      if (this.currentLocale == lang.locale) return;
 
-        if (process.client) localStorage.setItem("locale", lang.locale);
+      this.currentLocale = lang.locale;
+
+      if (process.client) {
+        localStorage.setItem("locale", lang.locale);
 
         if (redirect) {
           const switchLocalePath = useSwitchLocalePath();
-          const router = useRouter();
-
-          router
+          useRouter()
             .push(switchLocalePath(lang.locale))
             .catch((e) => console.log(e));
         }
-        // if (this.i18n.locale !== lang.locale) this.i18n.locale = lang.locale;
       }
+      // if (this.i18n.locale !== lang.locale) this.i18n.locale = lang.locale;
     },
   },
 });

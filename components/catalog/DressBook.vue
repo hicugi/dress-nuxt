@@ -83,7 +83,7 @@ export default {
         name="quantity"
         id="quantity"
         class="w-16 p-2 rounded-md border-1 bg-gray-0 border-gray-300 text-gray-900 text-sm w-half hover:bg-gray-50 hover:text-gray-700 focus:bg-gray-50"
-        :placeholder="useI18n().t('rent.dress_booking_quantity')"
+        :placeholder="$t('rent.dress_booking_quantity')"
         required=""
         min="1"
         max="100"
@@ -92,26 +92,28 @@ export default {
       <span :class="date ? 'text-green-500' : 'text-red-500'">
         {{
           this.date
-            ? this.bookings.find((item) => item.date === this.date).booking[0]
-                .free
-            : $t("rent.dress_booking_quantity_select_date") + ":"
+            ? this.bookings.find((item) => item.date === this.date)?.booking[0]
+                .free || 0
+            : $t("rent.dress_booking_quantity_select_date")
         }}
       </span>
     </div>
 
-    <div class="mt-5">
-      <FormErrors :error="errors.date" />
-      <VueTailwindDatepicker
-        v-if="bookings.length"
-        :key="datepikerKey"
-        no-input
-        as-single
-        v-model="date"
-        :disable-date="getBusyDates"
-        :formatter="{ date: 'YYYY-MM-DD', month: 'MMM' }"
-        :i18n="useI18n()?.locale?.value || 'en'"
-      />
-    </div>
+    <ClientOnly>
+      <div class="mt-5">
+        <FormErrors :error="errors.date" />
+        <VueTailwindDatepicker
+          v-if="bookings.length"
+          :key="datepikerKey"
+          no-input
+          as-single
+          v-model="date"
+          :disable-date="getBusyDates"
+          :formatter="{ date: 'YYYY-MM-DD', month: 'MMM' }"
+          :i18n="useI18n()?.locale?.value || 'en'"
+        />
+      </div>
+    </ClientOnly>
 
     <div class="mt-5">
       <FormErrors :error="errors.email" />
