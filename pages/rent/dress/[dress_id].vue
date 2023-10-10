@@ -15,18 +15,22 @@ export default {
       photoSelectedIndex: 0,
     };
   },
-  created() {
-    if (!this.currencies.length) this.loadCurrencies;
-
+  beforeMount() {
     this.getDress({
       dress_id: this.$route.params.dress_id || undefined,
     }).then(({ title, description, photo }) => {
+      const runtimeConfig = useRuntimeConfig().public.NUXT_PUBLIC_SITE_URL;
+      const localeRoute = useLocalePath();
       useSeoMeta({
         title,
         description,
         ogTitle: title,
         ogDescription: description,
-        ogImage: photo?.[0],
+        ogImage: photo?.[0].image,
+        ogUrl: runtimeConfig + localeRoute(),
+        twitterTitle: title,
+        twitterDescription: description,
+        twitterImage: photo?.[0].image,
         twitterCard: "summary_large_image",
       });
     });

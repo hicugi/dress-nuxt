@@ -14,6 +14,14 @@ import axios from "./composables/useApi.js";
 // };
 
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      NUXT_DEFAULT_CURRENCE_CODE:
+        process.env.NUXT_DEFAULT_CURRENCE_CODE || "USD",
+      NUXT_PUBLIC_SITE_URL:
+        process.env.NUXT_PUBLIC_SITE_URL || "http://localhost:3000",
+    },
+  },
   app: {
     head: {
       charset: "utf-8",
@@ -52,7 +60,7 @@ export default defineNuxtConfig({
         file: "kk.json",
       },
     ],
-    defaultLocale: "en",
+    defaultLocale: process.env.NUXT_DEFAULT_LOCALE || "en",
     strategy: "prefix",
     vueI18n: "./i18n.config.ts",
     detectBrowserLanguage: {

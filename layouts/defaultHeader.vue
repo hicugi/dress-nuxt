@@ -14,6 +14,18 @@ export default {
     };
   },
   async created() {
+    useHead({
+      htmlAttrs: {
+        lang: useI18n()?.locale?.value,
+      },
+      link: [
+        {
+          rel: "icon",
+          type: "image/ico",
+          href: "/favicon.ico",
+        },
+      ],
+    });
     await this.loadLanguages();
     await this.loadCurrencies();
   },
@@ -44,7 +56,7 @@ export default {
           <img
             src="~/assets/logo.svg"
             class="h-12 <sm:h-7"
-            alt="Прокат платьев Gatsby"
+            :alt="$t('rent.common_title')"
           />
         </NuxtLink>
         <div class="flex items-center lg:order-2">
