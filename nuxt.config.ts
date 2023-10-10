@@ -25,7 +25,7 @@ export default defineNuxtConfig({
   routeRules: {
     "/": { redirect: "/rent" },
   },
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   modules: ["@pinia/nuxt", "nuxt-windicss", "@nuxtjs/i18n"],
   alias: {
     pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs",

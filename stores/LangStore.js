@@ -5,8 +5,7 @@ export const useLangStore = defineStore("lang-store", {
   state: () => ({
     languages: [],
     currentLang: null,
-    currentLocale:
-      useI18n()?.locale?.value ?? process.env.NUXT_DEFAULT_LOCALE ?? "en",
+    currentLocale: useI18n()?.locale?.value,
     errors: [],
     error: [],
   }),
@@ -37,8 +36,6 @@ export const useLangStore = defineStore("lang-store", {
       this.currentLocale = lang.locale;
 
       if (process.client) {
-        localStorage.setItem("locale", lang.locale);
-
         if (redirect) {
           const switchLocalePath = useSwitchLocalePath();
           useRouter()
@@ -46,7 +43,6 @@ export const useLangStore = defineStore("lang-store", {
             .catch((e) => console.log(e));
         }
       }
-      // if (this.i18n.locale !== lang.locale) this.i18n.locale = lang.locale;
     },
   },
 });
