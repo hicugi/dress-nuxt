@@ -7,9 +7,9 @@ export const useCurrencyStore = defineStore("currency-store", {
     currentCurrency: null,
     currentCode: process.client
       ? localStorage.getItem("currencyCode") ??
-        process.env.NUXT_DEFAULT_CURRENCE_CODE ??
+        useRuntimeConfig().public.NUXT_DEFAULT_CURRENCE_CODE ??
         "USD"
-      : process.env.NUXT_DEFAULT_CURRENCE_CODE ?? "USD",
+      : useRuntimeConfig().public.NUXT_DEFAULT_CURRENCE_CODE,
     errors: [],
     error: [],
   }),

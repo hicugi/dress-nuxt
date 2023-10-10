@@ -32,10 +32,21 @@ export default {
     ...mapWritableState(useDressCatalog, ["date"]),
   },
   created() {
+    const runtimeConfig = useRuntimeConfig().public.NUXT_PUBLIC_SITE_URL;
+    const localeRoute = useLocalePath();
     useSeoMeta({
-      title: useI18n().t("content.common_title"),
-      description: useI18n().t("content.common_title"),
+      title: useI18n().t("rent.common_title"),
+      description: useI18n().t("rent.common_description"),
+      ogTitle: useI18n().t("rent.common_title"),
+      ogDescription: useI18n().t("rent.common_description"),
+      ogImage: runtimeConfig + "/img/og-image.jpg",
+      ogUrl: runtimeConfig + localeRoute(),
+      twitterTitle: useI18n().t("rent.common_title"),
+      twitterDescription: useI18n().t("rent.common_description"),
+      twitterImage: runtimeConfig + "/img/og-image.jpg",
+      twitterCard: "summary_large_image",
     });
+
     this.loadDressCatalog();
     this.loadCategories();
   },
