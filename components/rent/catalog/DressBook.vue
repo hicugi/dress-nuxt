@@ -21,6 +21,7 @@ export default {
     };
   },
   async mounted() {
+    useDressBooking().$reset();
     await this.getAwaylableDressDates(this.dress_id);
     const runtimeConfig = useRuntimeConfig().public.NUXT_PUBLIC_SITE_URL;
     const localeRoute = useLocalePath();
