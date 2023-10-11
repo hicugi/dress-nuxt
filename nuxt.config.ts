@@ -1,4 +1,4 @@
-import axios from "./composables/useApi.js";
+import axios from "axios";
 
 // const loadLanguages = async () => {
 //   return await axios()
@@ -94,8 +94,9 @@ export default defineNuxtConfig({
     xsl: false,
     //sitemaps: true,
     urls: async () => {
-      const { data } = await axios().get(
-        "v1/client/rent/dress/list?per_page=100",
+      const { data } = await axios.get(
+        (process.env.NUXT_API_URL ?? "http://localhost/api/") +
+          "v1/client/rent/dress/list?per_page=100",
         {
           params: {
             //category_id: this.category.category_id,
@@ -110,7 +111,9 @@ export default defineNuxtConfig({
         lastmod: dress.updated_at,
         changefreq: "weekly",
         priority: 0.8,
-        image: dress.photo,
+        image: dress.photo.map((photo) => {
+          return { loc: photo.image };
+        }),
       }));
     },
   },
