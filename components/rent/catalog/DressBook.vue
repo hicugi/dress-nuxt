@@ -17,11 +17,14 @@ export default {
   },
   data() {
     return {
-      frontURL: process.env.NUXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+      frontURL: "",
     };
   },
   async mounted() {
     await this.getAwaylableDressDates(this.dress_id);
+    const runtimeConfig = useRuntimeConfig().public.NUXT_PUBLIC_SITE_URL;
+    const localeRoute = useLocalePath();
+    this.frontURL = runtimeConfig + localeRoute();
   },
   methods: {
     ...mapActions(useDressBooking, [
@@ -57,7 +60,7 @@ export default {
           'https://wa.me/' +
           booking.dress.user.phone +
           '/' +
-          `?text=${frontURL}/${useI18n()?.locale?.value}/dress/${dress_id}%0A` +
+          `?text=${frontURL}%0A` +
           `booking_id: ${booking.booking_id}%0A` +
           `date: ${booking.date}%0A` +
           `email: ${booking.email}%0A` +

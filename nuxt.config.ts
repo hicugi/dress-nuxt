@@ -20,6 +20,7 @@ export default defineNuxtConfig({
         process.env.NUXT_DEFAULT_CURRENCE_CODE || "USD",
       NUXT_PUBLIC_SITE_URL:
         process.env.NUXT_PUBLIC_SITE_URL || "http://localhost:3000",
+      NUXT_API_URL: process.env.NUXT_API_URL || "http://localhost/api/",
     },
   },
   app: {
