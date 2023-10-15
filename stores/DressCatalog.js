@@ -13,20 +13,20 @@ export const useDressCatalog = defineStore("dress-catalog", {
     categories: [],
     category: {
       category_id: undefined,
-      title: "",
+      title: useI18n().t("rent.category_list_all_categories"),
     },
     errors: [],
     error: [],
   }),
   actions: {
-    async loadDressCatalog() {
+    async loadDressCatalog({ category_id }) {
       const lang = useLangStore().currentLocale;
       const currency = useCurrencyStore().currentCode;
       //const currencySymbol = useCurrencyStore().currentSymbol;
       await axios()
         .get("/v1/client/rent/dress/list?per_page=100", {
           params: {
-            category_id: this.category.category_id,
+            category_id: category_id ?? undefined,
             lang,
             currency,
           },
@@ -40,8 +40,12 @@ export const useDressCatalog = defineStore("dress-catalog", {
     },
 
     async changeCategory(item) {
-      this.category = item;
-      this.loadDressCatalog();
+      console.log(item);
+      await this.loadDressCatalog({ category_id: item.category_id });
+
+      this.$patch({
+        category: item,
+      });
     },
 
     async changeDate(date) {
