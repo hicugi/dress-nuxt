@@ -4,6 +4,7 @@ import { useCurrencyStore } from "~/stores/CurrencyStore.js";
 import { useDressCatalog } from "~/stores/DressCatalog";
 import DressBook from "~/components/rent/catalog/DressBook.vue";
 import VLazyImage from "v-lazy-image";
+import useMetaSeo from "~/composables/useMetaSeo";
 
 export default {
   components: {
@@ -16,22 +17,14 @@ export default {
     };
   },
   beforeMount() {
+    const route = useRoute();
     this.getDress({
-      dress_id: this.$route.params.dress_id || undefined,
+      dress_id: route.params.dress_id || undefined,
     }).then(({ title, description, photo }) => {
-      const runtimeConfig = useRuntimeConfig().public.NUXT_PUBLIC_SITE_URL;
-      const localeRoute = useLocalePath();
-      useSeoMeta({
+      useMetaSeo({
         title,
         description,
-        ogTitle: title,
-        ogDescription: description,
-        ogImage: photo?.[0].image,
-        ogUrl: runtimeConfig + localeRoute(),
-        twitterTitle: title,
-        twitterDescription: description,
-        twitterImage: photo?.[0].image,
-        twitterCard: "summary_large_image",
+        imgPath: photo?.[0]?.image || undefined,
       });
     });
   },

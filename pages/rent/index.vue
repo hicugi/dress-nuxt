@@ -5,6 +5,7 @@ import { mapActions, mapState, mapWritableState } from "pinia";
 import { useDressCatalog } from "~/stores/DressCatalog";
 import VueTailwindDatepicker from "vue-tailwind-datepicker";
 //import VueDatePicker from "@vuepic/vue-datepicker";
+import useMetaSeo from "~/composables/useMetaSeo";
 
 export default {
   components: {
@@ -14,7 +15,10 @@ export default {
     //VueDatePicker,
   },
   data() {
-    return {};
+    return {
+      i18n: useI18n(),
+      title: useI18n().t("rent.common_title"),
+    };
   },
   methods: {
     dDate(date) {
@@ -31,23 +35,29 @@ export default {
     ...mapState(useDressCatalog, ["dresses", "categories", "category"]),
     ...mapWritableState(useDressCatalog, ["date"]),
   },
+  watch: {
+    category(newCategory) {
+      this.title =
+        this.i18n.t("rent.common_title") +
+        " " +
+        newCategory.title.toLowerCase();
+
+      useMetaSeo({
+        title: this.title,
+        imgPath: this.dresses?.[0]?.photo?.[0].image || "",
+      });
+    },
+  },
   created() {
     const runtimeConfig = useRuntimeConfig().public.NUXT_PUBLIC_SITE_URL;
-    const localeRoute = useLocalePath();
-    useSeoMeta({
-      title: useI18n().t("rent.common_title"),
+
+    useMetaSeo({
+      title: this.title + " " + this.category.title.toLowerCase(),
       description: useI18n().t("rent.common_description"),
-      ogTitle: useI18n().t("rent.common_title"),
-      ogDescription: useI18n().t("rent.common_description"),
-      ogImage: runtimeConfig + "/img/og-image.jpg",
-      ogUrl: runtimeConfig + localeRoute(),
-      twitterTitle: useI18n().t("rent.common_title"),
-      twitterDescription: useI18n().t("rent.common_description"),
-      twitterImage: runtimeConfig + "/img/og-image.jpg",
-      twitterCard: "summary_large_image",
+      imgPath: runtimeConfig + "/img/og-image.jpg",
     });
 
-    this.loadDressCatalog();
+    this.loadDressCatalog({});
     this.loadCategories();
   },
 };
@@ -57,7 +67,12 @@ export default {
 <template>
   <section class="text-gray-600 body-font">
     <div class="container px-5 mx-auto">
-      <div class="flex flex-row-reverse mb-5 <sm:mb-3">
+      <div class="flex mb-5 <sm:mb-3">
+        <div class="flex-grow">
+          <h1 class="pt-2 text-xl >sm:font-bold <sm:text-sm">
+            {{ title }}
+          </h1>
+        </div>
         <DropDown
           v-if="categories.length"
           :init-item="category"
