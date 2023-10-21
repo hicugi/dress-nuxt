@@ -20,9 +20,9 @@ export default {
       frontURL: "",
     };
   },
-  async created() {
+  created() {
     useDressBooking().$reset();
-    await this.getAwaylableDressDates(this.dress_id);
+    this.getAwaylableDressDates(this.dress_id);
     const runtimeConfig = useRuntimeConfig().public.NUXT_PUBLIC_SITE_URL;
     const localeRoute = useLocalePath();
     this.frontURL = runtimeConfig + localeRoute();
