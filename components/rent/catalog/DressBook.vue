@@ -20,7 +20,7 @@ export default {
       frontURL: "",
     };
   },
-  async mounted() {
+  async created() {
     useDressBooking().$reset();
     await this.getAwaylableDressDates(this.dress_id);
     const runtimeConfig = useRuntimeConfig().public.NUXT_PUBLIC_SITE_URL;
@@ -95,8 +95,8 @@ export default {
       {{ $t("rent.dress_booking_quantity_available") }}:
       <span :class="date ? 'text-green-500' : 'text-red-500'">
         {{
-          this.date
-            ? this.bookings.find((item) => item.date === this.date)?.booking[0]
+          date
+            ? this.bookings.find((item) => item.date === date)?.booking[0]
                 .free || 0
             : $t("rent.dress_booking_quantity_select_date")
         }}

@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "~/composables/useApi";
+import useApiCore from "~/composables/useApiCore";
 
 export const useLangStore = defineStore("lang-store", {
   state: () => ({
@@ -11,10 +11,9 @@ export const useLangStore = defineStore("lang-store", {
   }),
   actions: {
     async loadLanguages() {
-      await axios()
-        .get("v1/language/list")
+      useApiCore("v1/language/list")
         .then((response) => {
-          const languages = response.data.data;
+          const languages = response.data.value.data;
           if (languages.length)
             languages.find((currentLang) => {
               if (currentLang.locale === this.currentLocale) {

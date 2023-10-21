@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "~/composables/useApi";
+import useApiCore from "~/composables/useApiCore";
 
 export const useCurrencyStore = defineStore("currency-store", {
   state: () => ({
@@ -15,11 +15,10 @@ export const useCurrencyStore = defineStore("currency-store", {
   }),
   actions: {
     async loadCurrencies() {
-      await axios()
-        .get("/v1/currency/list")
+      await useApiCore("v1/currency/list")
         .then((response) => {
           let patch = {
-            currencies: [...response.data.data],
+            currencies: [...response.data.value.data],
           };
 
           const currentCurrency = patch.currencies.find((currency) => {
