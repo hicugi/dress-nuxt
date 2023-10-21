@@ -1,7 +1,8 @@
 <script setup lang="ts">
+const siteName = useRuntimeConfig().public.NUXT_SITE_NAME;
 useHead({
   titleTemplate: (titleChunk) => {
-    return titleChunk ? `${titleChunk} - Gatsby` : "Gatsby";
+    return titleChunk ? `${titleChunk} - ${siteName}` : `${siteName}`;
   },
 });
 </script>

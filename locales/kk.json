@@ -45,8 +45,8 @@
     "dress_booking_save_dress_quantity_less_then_needed": "Брондау үшін қолжетімді элементтер жеткіліксіз"
   },
   "rent": {
-    "common_title": "Прокат платьев",
-    "common_description": "A wide range of exquisite evening, wedding, uzatu, ethnic, national and children's dresses for rent for any events and photo shoots.",
+    "common_title": "Көйлек жалға беру",
+    "common_description": "Кез келген іс-шаралар мен фотосессиялар үшін жалға алу үшін талғампаз кеш, үйлену тойы, ұзату, этникалық, ұлттық және балалар көйлектерінің кең ассортименті.",
 
     "category_list_all_categories": "Барлық санаттар",
     "dress_catalog_filter_date": "Жалға алу күні",

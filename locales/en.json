@@ -45,6 +45,9 @@
     "dress_booking_save_dress_quantity_less_then_needed": "There are not enough available items to book"
   },
   "rent": {
+    "common_title": "Dress rental",
+    "common_description": "A wide range of exquisite evening, wedding, uzatu, ethnic, national and children's dresses for rent for any events and photo shoots.",
+
     "category_list_all_categories": "All categories",
     "dress_catalog_filter_date": "Rental date",
     "dress_catalog_datepicker_close": "Close",
