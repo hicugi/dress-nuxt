@@ -16,7 +16,7 @@ export default {
       photoSelectedIndex: 0,
     };
   },
-  beforeMount() {
+  created() {
     const route = useRoute();
     this.getDress({
       dress_id: route.params.dress_id || undefined,

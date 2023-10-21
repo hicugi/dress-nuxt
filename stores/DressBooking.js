@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "~/composables/useApi";
+import useApiCore from "~/composables/useApiCore";
 
 export const useDressBooking = defineStore("dress-booking", {
   state: () => ({
@@ -22,12 +23,11 @@ export const useDressBooking = defineStore("dress-booking", {
   actions: {
     async getAwaylableDressDates(dress_id) {
       this.form.dress_id = dress_id;
-      axios()
-        .get("/v1/client/rent/booking/available", {
-          params: { dress_id },
-        })
+      await useApiCore("v1/client/rent/booking/available", {
+        params: { dress_id },
+      })
         .then((response) => {
-          this.bookings = response.data.data;
+          this.bookings = response.data.value.data;
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
@@ -45,7 +45,7 @@ export const useDressBooking = defineStore("dress-booking", {
       );
     },
     async changeDate(date) {
-      console.log("xx", date);
+      //console.log("xx", date);
     },
     saveBooking(e) {
       e.preventDefault();
