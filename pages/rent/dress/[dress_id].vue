@@ -16,16 +16,18 @@ export default {
       photoSelectedIndex: 0,
     };
   },
-  created() {
+  async created() {
     const route = useRoute();
-    this.getDress({
-      dress_id: route.params.dress_id || undefined,
-    }).then(({ title, description, photo }) => {
-      useMetaSeo({
-        title,
-        description,
-        imgPath: photo?.[0]?.image || undefined,
-      });
+    const { data: dress } = await useAsyncData("dress", () =>
+      this.getDress({
+        dress_id: route.params.dress_id || undefined,
+      })
+    );
+
+    useMetaSeo({
+      title: dress.value.title,
+      description: dress.value.description,
+      imgPath: dress.value?.photo?.[0]?.image || undefined,
     });
   },
   methods: {
