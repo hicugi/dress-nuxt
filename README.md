@@ -1,8 +1,11 @@
-# Nuxt 3 Minimal Starter
+# Dress rent nuxt frontend
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This is a multilanguage adaptive frontend repository in Nuxt3 with SSR for SEO, the - [backend is here](https://github.com/EvolutionInIT/dress_rent_backend)
 
-## Setup
+![Home page](./assets/readme/home.jpg)
+![Dress page](./assets/readme/dress.jpg)
+
+## Install
 
 Make sure to install the dependencies:
 
@@ -10,14 +13,11 @@ Make sure to install the dependencies:
 # npm
 npm install
 
-# pnpm
-pnpm install
-
 # yarn
 yarn install
 
-# bun
-bun install
+cp .env.example .env
+nano .env
 ```
 
 ## Development Server
@@ -26,16 +26,10 @@ Start the development server on `http://localhost:3000`:
 
 ```bash
 # npm
-npm run dev
-
-# pnpm
-pnpm run dev
+npm run dev -- -o
 
 # yarn
-yarn dev
-
-# bun
-bun run dev
+yarn dev -- -o
 ```
 
 ## Production
@@ -46,30 +40,6 @@ Build the application for production:
 # npm
 npm run build
 
-# pnpm
-pnpm run build
-
 # yarn
 yarn build
-
-# bun
-bun run build
 ```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
