@@ -151,10 +151,7 @@ export default {
               </p>
             </div>
 
-            <div v-if="dress">
-              <hr class="mt-3 mb-3" />
-              <DressBook :dress_id="dress.dress_id" />
-            </div>
+            <DressBook v-if="dress" :dress_id="dress.dress_id" />
           </form>
         </div>
       </div>

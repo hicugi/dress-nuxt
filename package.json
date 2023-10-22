@@ -24,6 +24,6 @@
   "dependencies": {
     "axios": "^1.5.1",
     "v-lazy-image": "^2.1.1",
-    "vue-tailwind-datepicker": "^1.5.2"
+    "vue-tailwind-datepicker": "^1.6.1"
   }
 }

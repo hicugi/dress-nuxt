@@ -51,6 +51,7 @@ export default {
 </script>
 
 <template>
+  <hr class="mt-3 mb-3" />
   <div v-if="success" class="text-green-500 text-sm">
     {{ $t("rent.dress_booking_save_success") }}
     {{ $t("rent.dress_booking_save_success_send_to_messenger") }}:
@@ -103,18 +104,20 @@ export default {
       </span>
     </div>
 
-    <div class="mt-5">
-      <FormErrors :error="errors.date" />
-      <VueTailwindDatepicker
-        no-input
-        as-single
-        :key="datepikerKey"
-        v-model="date"
-        :disable-date="getBusyDates"
-        :formatter="{ date: 'YYYY-MM-DD', month: 'MMM' }"
-        :i18n="useI18n()?.locale?.value || 'en'"
-      />
-    </div>
+    <ClientOnly>
+      <div class="mt-5">
+        <FormErrors :error="errors.date" />
+        <VueTailwindDatepicker
+          no-input
+          as-single
+          :key="datepikerKey"
+          v-model="date"
+          :disable-date="getBusyDates"
+          :formatter="{ date: 'YYYY-MM-DD', month: 'MMM' }"
+          :i18n="useI18n()?.locale?.value || 'en'"
+        />
+      </div>
+    </ClientOnly>
 
     <div class="mt-5">
       <FormErrors :error="errors.email" />
