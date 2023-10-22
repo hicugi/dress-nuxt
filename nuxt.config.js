@@ -46,6 +46,7 @@ export default defineNuxtConfig({
     "nuxt-windicss",
     "@nuxtjs/i18n",
     "nuxt-simple-sitemap",
+    "nuxt-simple-robots",
   ],
   alias: {
     pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs",
