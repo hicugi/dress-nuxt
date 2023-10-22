@@ -1,4 +1,3 @@
-import { useI18n } from "#imports";
 import { defineStore } from "pinia";
 import { useLangStore } from "./LangStore.js";
 import { useCurrencyStore } from "./CurrencyStore.js";
@@ -38,17 +37,30 @@ export const useDressCatalog = defineStore("dress-catalog", {
         });
     },
 
-    async changeCategory(item) {
-      //console.log(item);
+    async setCategory(item) {
       await this.loadDressCatalog({ category_id: item.category_id });
       this.$patch({
         category: item,
       });
     },
 
-    async changeDate(date) {
-      //console.log("xx", date);
+    switchCategory(item) {
+      const currentRoute = useRouter().currentRoute;
+
+      if (process.client) {
+        useRouter()
+          .replace({
+            ...currentRoute,
+            params: {
+              ...currentRoute.params,
+              slug: item.slug,
+            },
+          })
+          .catch((e) => console.log(e));
+      }
     },
+
+    async changeDate(date) {},
 
     async loadCategories() {
       const lang = useLangStore().currentLocale;
@@ -57,23 +69,28 @@ export const useDressCatalog = defineStore("dress-catalog", {
         params: {
           lang,
         },
-      }).then((response) => {
-        const categories = [
-          {
-            category_id: undefined,
-            title: i18n.t("rent.category_list_all_categories"),
-          },
-          ...response.data.value.data,
-        ];
+      })
+        .then((response) => {
+          const categories = [
+            {
+              category_id: undefined,
+              title: i18n.t("rent.category_list_all_categories"),
+              slug: "all",
+            },
 
-        this.$patch({
-          categories,
-          category: categories[0],
+            ...response.data.value.data.map((category) => {
+              return { ...category, slug: stringToSlug(category.title) };
+            }),
+          ];
+
+          this.$patch({
+            categories,
+            category: categories[0],
+          });
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
         });
-      });
-      // .catch((error) => {
-      //   this.errors = error.response.data.errors;
-      // });
     },
 
     async getDress(params) {

@@ -27,8 +27,8 @@ export default {
     ...mapActions(useDressCatalog, [
       "loadDressCatalog",
       "loadCategories",
-      "changeCategory",
-      "changeDate",
+      "setCategory",
+      //"changeDate",
     ]),
   },
   computed: {
@@ -57,8 +57,8 @@ export default {
       imgPath: runtimeConfig + "/img/og-image.jpg",
     });
 
-    this.loadDressCatalog({});
     this.loadCategories();
+    this.loadDressCatalog({});
   },
 };
 </script>
@@ -77,7 +77,7 @@ export default {
           v-if="categories.length"
           :init-item="category"
           :items="categories"
-          :change="changeCategory"
+          :change="setCategory"
           index="category_id"
         />
         <!-- <div class="mr-2 w-auto">

@@ -39,7 +39,7 @@ export default defineNuxtConfig({
     //work but with bugs
   },
   routeRules: {
-    "/": { redirect: "/rent" },
+    "/": { redirect: "/rent/c/-" },
   },
   modules: [
     "@pinia/nuxt",
