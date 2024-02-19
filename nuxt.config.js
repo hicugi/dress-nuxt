@@ -47,6 +47,7 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "nuxt-simple-sitemap",
     "nuxt-simple-robots",
+    "nuxt-gtag",
   ],
   alias: {
     pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs",
@@ -122,5 +123,8 @@ export default defineNuxtConfig({
         }),
       }));
     },
+  },
+  gtag: {
+    id: process.env.NUXT_GTAG ?? "",
   },
 });
