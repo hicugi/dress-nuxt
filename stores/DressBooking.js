@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+
 import axios from "~/composables/useApi";
 import useApiCore from "~/composables/useApiCore";
 
@@ -38,7 +39,7 @@ export const useDressBooking = defineStore("dress-booking", {
 
       return (
         date < new Date(+new Date() - 1000 * 60 * 60 * 24 * 1) ||
-        date > new Date(+new Date() + 1000 * 60 * 60 * 24 * 13) ||
+        date > new Date(+new Date() + 1000 * 60 * 60 * 24 * 35) ||
         this.bookings.find(
           (item) => item.date === d && item.booking[0].free < 1
         )

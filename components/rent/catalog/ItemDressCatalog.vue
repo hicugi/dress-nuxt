@@ -1,12 +1,9 @@
 <script>
 import { mapState } from "pinia";
 import { useCurrencyStore } from "~/stores/CurrencyStore.js";
-import VLazyImage from "v-lazy-image";
 
 export default {
-  components: {
-    VLazyImage,
-  },
+  components: {},
   props: {
     dress: { type: Object, default: {} },
   },
@@ -29,11 +26,13 @@ export default {
       "
     >
       <div class="relative block h-128 rounded-xl overflow-hidden">
-        <v-lazy-image
+        <NuxtImg
+          v-if="dress.photo.length > 0"
           class="group-hover:scale-110 transform duration-1000 object-cover w-full h-full"
-          src-placeholder="/img/placeholder.gif"
-          :src="dress?.photo[0]?.image || ''"
+          :src="dress.photo[0].image"
           :alt="dress.title"
+          placeholder="/img/placeholder.gif"
+          preload
         />
       </div>
       <div class="mt-4">

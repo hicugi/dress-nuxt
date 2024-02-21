@@ -3,13 +3,11 @@ import { mapActions, mapState } from "pinia";
 import { useCurrencyStore } from "~/stores/CurrencyStore.js";
 import { useDressCatalog } from "~/stores/DressCatalog";
 import DressBook from "~/components/rent/catalog/DressBook.vue";
-import VLazyImage from "v-lazy-image";
 import useMetaSeo from "~/composables/useMetaSeo";
 
 export default {
   components: {
     DressBook,
-    VLazyImage,
   },
   data() {
     return {
@@ -47,17 +45,17 @@ export default {
     <div class="relative mx-auto max-w-screen-xl px-4 py-8 <sm:py-4">
       <div class="grid grid-cols-1 items-start gap-8 <sm:gap-2 md:grid-cols-2">
         <div class="grid gap-4 <sm:gap-2 md:grid-cols-1">
-          <v-lazy-image
+          <NuxtImg
             class="aspect-square w-full h-250 <sm:h-130 rounded-xl object-cover"
-            src-placeholder="/img/placeholder.gif"
+            placeholder="/img/placeholder.gif"
             :src="dress.photo[photoSelectedIndex].image"
             :alt="dress.title"
           />
           <ul class="mt-1 flex gap-5 <sm:gap-2">
             <li v-for="(photo, key) in dress.photo" :key="key" class="h-50">
-              <v-lazy-image
+              <NuxtImg
                 :src="photo.image"
-                src-placeholder="/img/placeholder.gif"
+                placeholder="/img/placeholder.gif"
                 class="aspect-square w-full h-full rounded-xl object-cover cursor-pointer"
                 @click="photoSelectedIndex = key"
               />
@@ -71,7 +69,6 @@ export default {
               <h1 class="text-xl font-bold sm:text-2xl">
                 {{ dress.title }}
               </h1>
-
               <p class="text-sm">
                 {{ dress.category.map((item) => item.title).join(", ") }}
               </p>
