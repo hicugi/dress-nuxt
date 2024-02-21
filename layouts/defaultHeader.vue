@@ -53,8 +53,8 @@ export default {
           "
           class="flex items-center"
         >
-          <img
-            src="~/assets/logo.svg"
+          <NuxtImg
+            src="/logo.svg"
             class="h-12 <sm:h-7"
             :alt="$t('rent.common_title')"
           />

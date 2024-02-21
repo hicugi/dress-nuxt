@@ -1,14 +1,9 @@
-<script>
-import VLazyImage from "v-lazy-image";
+<script setup>
+import { defineProps } from "vue";
 
-export default {
-  components: {
-    VLazyImage,
-  },
-  props: {
-    category: { type: Object, default: {} },
-  },
-};
+const props = defineProps({
+  category: Object,
+});
 </script>
 
 <template>
@@ -28,11 +23,13 @@ export default {
       <div
         class="relative block lg:h-100 md:h-80 <sm:h-50 rounded-xl overflow-hidden"
       >
-        <v-lazy-image
+        <NuxtImg
+          v-if="category.photos.length > 0"
           class="group-hover:scale-110 transform duration-1000 object-cover w-full h-full"
-          src-placeholder="/img/placeholder.gif"
-          :src="category?.photos?.[0]?.image || ''"
+          :src="category.photos[0].image"
           :alt="category.title"
+          placeholder="/img/placeholder.gif"
+          preload
         />
       </div>
       <div class="mt-4 <sm:mt-2">
