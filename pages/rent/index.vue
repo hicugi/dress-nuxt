@@ -1,66 +1,28 @@
-<script>
-import DropDown from "~/components/DropDown.vue";
-import ItemDressCatalog from "~/components/rent/catalog/ItemDressCatalog.vue";
-import { mapActions, mapState, mapWritableState } from "pinia";
+<script setup>
+import Categories from "~/components/rent/Categories.vue";
 import { useDressCatalog } from "~/stores/DressCatalog";
-import VueTailwindDatepicker from "vue-tailwind-datepicker";
 //import VueDatePicker from "@vuepic/vue-datepicker";
 import useMetaSeo from "~/composables/useMetaSeo";
+const runtimeConfig = useRuntimeConfig().public.NUXT_PUBLIC_SITE_URL;
+const $t = useI18n().t;
 
-export default {
-  components: {
-    ItemDressCatalog,
-    DropDown,
-    VueTailwindDatepicker,
-    //VueDatePicker,
-  },
-  data() {
-    return {
-      i18n: useI18n(),
-      title: useI18n().t("rent.common_title"),
-    };
-  },
-  methods: {
-    dDate(date) {
-      return date < new Date() || date > new Date(2023, 0, 8);
-    },
-    ...mapActions(useDressCatalog, [
-      "loadDressCatalog",
-      "loadCategories",
-      "setCategory",
-      //"changeDate",
-    ]),
-  },
-  computed: {
-    ...mapState(useDressCatalog, ["dresses", "categories", "category"]),
-    ...mapWritableState(useDressCatalog, ["date"]),
-  },
-  watch: {
-    category(newCategory) {
-      this.title =
-        this.i18n.t("rent.common_title") +
-        " " +
-        newCategory.title.toLowerCase();
+const store = useDressCatalog();
 
-      useMetaSeo({
-        title: this.title,
-        imgPath: this.dresses?.[0]?.photo?.[0].image || "",
-      });
-    },
-  },
-  created() {
-    const runtimeConfig = useRuntimeConfig().public.NUXT_PUBLIC_SITE_URL;
+if (!store.categories.length) await store.loadCategories();
+const categories = store.categories;
 
-    useMetaSeo({
-      title: this.title + " " + this.category.title.toLowerCase(),
-      description: useI18n().t("rent.common_description"),
-      imgPath: runtimeConfig + "/img/og-image.jpg",
-    });
+const title = computed(
+  () =>
+    $t("rent.common_title") +
+    " " +
+    $t("rent.category_list_all_categories").toLowerCase()
+);
 
-    this.loadCategories();
-    this.loadDressCatalog({});
-  },
-};
+useMetaSeo({
+  title: title.value,
+  description: useI18n().t("rent.common_description"),
+  imgPath: runtimeConfig + "/img/og-image.jpg",
+});
 </script>
 
 <!-- from https://tailblocks.cc/ ECOMMERCE section -->
@@ -73,13 +35,7 @@ export default {
             {{ title }}
           </h1>
         </div>
-        <DropDown
-          v-if="categories.length"
-          :init-item="category"
-          :items="categories"
-          :change="setCategory"
-          index="category_id"
-        />
+
         <!-- <div class="mr-2 w-auto">
           <VueTailwindDatepicker
             as-single
@@ -99,11 +55,10 @@ export default {
         </div> -->
       </div>
       <div class="flex flex-wrap -m-4">
-        <ItemDressCatalog
-          v-for="(dress, key) in dresses"
-          :dress="dress"
-          :key="key"
-        />
+        <template v-for="(category, index) in categories">
+          <Categories :category="category" :key="index" v-if="index" />
+        </template>
+        <Categories :category="categories[0]" :key="0" />
       </div>
     </div>
   </section>
