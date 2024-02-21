@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
-import { useLangStore } from "./LangStore.js";
-import { useCurrencyStore } from "./CurrencyStore.js";
 
+import { useCurrencyStore } from "./CurrencyStore.js";
+import { useLangStore } from "./LangStore.js";
 import useApiCore from "~/composables/useApiCore";
 
 export const useDressCatalog = defineStore("dress-catalog", {
@@ -63,6 +63,7 @@ export const useDressCatalog = defineStore("dress-catalog", {
     async changeDate(date) {},
 
     async loadCategories() {
+      const runtimeConfig = useRuntimeConfig().public.NUXT_PUBLIC_SITE_URL;
       const lang = useLangStore().currentLocale;
       const i18n = useI18n();
       await useApiCore("v1/client/rent/category/list?per_page=100", {
@@ -76,6 +77,7 @@ export const useDressCatalog = defineStore("dress-catalog", {
               category_id: undefined,
               title: i18n.t("rent.category_list_all_categories"),
               slug: "all",
+              photos: [{ image: runtimeConfig + "/img/og-image.jpg" }],
             },
 
             ...response.data.value.data.map((category) => {
