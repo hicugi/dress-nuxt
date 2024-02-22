@@ -13,6 +13,9 @@ export const useDressCatalog = defineStore("dress-catalog", {
     category: {
       category_id: undefined,
       title: useI18n().t("rent.category_list_all_categories"),
+      description: useI18n().t("rent.common_description"),
+      slug: "all",
+      photos: [{ image: useRuntimeConfig() + "/img/og-image.jpg" }],
     },
     errors: [],
     error: [],
@@ -77,6 +80,7 @@ export const useDressCatalog = defineStore("dress-catalog", {
               category_id: undefined,
               title: i18n.t("rent.category_list_all_categories"),
               slug: "all",
+              description: i18n.t("rent.common_description"),
               photos: [{ image: runtimeConfig + "/img/og-image.jpg" }],
             },
 
