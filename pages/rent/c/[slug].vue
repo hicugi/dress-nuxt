@@ -21,6 +21,8 @@ const title = computed(
   () => $t("rent.common_title") + " " + category.value.title.toLowerCase()
 );
 
+const description = computed(() => category.value.description);
+
 const dresses = computed(() => store.dresses);
 const categoryImgPath = computed(
   () =>
@@ -29,7 +31,7 @@ const categoryImgPath = computed(
 
 useMetaSeo({
   title: title.value,
-  description: useI18n().t("rent.common_description"),
+  description: description.value,
   imgPath: categoryImgPath,
 });
 

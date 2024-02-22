@@ -4,6 +4,13 @@ useHead({
   titleTemplate: (titleChunk) => {
     return titleChunk ? `${titleChunk} - ${siteName}` : `${siteName}`;
   },
+  meta: [
+    {
+      hid: "robots",
+      name: "robots",
+      content: "index,follow",
+    },
+  ],
 });
 </script>
 
