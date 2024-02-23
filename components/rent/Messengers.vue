@@ -8,7 +8,6 @@ const props = defineProps({
   telegram: String,
   lang: String,
 });
-console.log("lang", props.lang);
 </script>
 
 <template>
