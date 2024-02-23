@@ -50,8 +50,10 @@ export default {
       <div class="grid grid-cols-1 items-start gap-8 <sm:gap-2 md:grid-cols-2">
         <div class="grid gap-4 <sm:gap-2 md:grid-cols-1">
           <Messengers
+            v-if="dress.user"
             :whatsapp="dress.user.phone"
             :telegram="dress.user.telegram_username"
+            :lang="useI18n().locale.value"
           />
 
           <NuxtImg
@@ -67,6 +69,8 @@ export default {
                 placeholder="/img/placeholder.gif"
                 class="aspect-square w-full h-full rounded-xl object-cover cursor-pointer"
                 @click="photoSelectedIndex = key"
+                format="webp"
+                preload
               />
             </li>
           </ul>

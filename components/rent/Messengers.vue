@@ -6,7 +6,9 @@ const frontURL = runtimeConfig + localeRoute();
 const props = defineProps({
   whatsapp: String,
   telegram: String,
+  lang: String,
 });
+console.log("lang", props.lang);
 </script>
 
 <template>
