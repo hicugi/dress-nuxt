@@ -6,6 +6,7 @@ export default {
   components: {},
   props: {
     dress: { type: Object, default: {} },
+    category: { type: Object },
   },
   computed: {
     ...mapState(useCurrencyStore, ["currentCurrency"]),
@@ -14,7 +15,9 @@ export default {
 </script>
 
 <template>
-  <div class="group 2xl:w-1/4 xl:w-1/4 lg:w-1/3 md:w-1/2 p-4 w-full">
+  <div
+    class="group 2xl:w-1/4 xl:w-1/4 lg:w-1/3 md:w-1/2 <sm:w-1/2 <sm:p-2 p-4 w-full"
+  >
     <NuxtLink
       :to="
         localePath({
@@ -25,7 +28,7 @@ export default {
         })
       "
     >
-      <div class="relative block h-128 rounded-xl overflow-hidden">
+      <div class="relative block h-128 <sm:h-70 rounded-xl overflow-hidden">
         <NuxtImg
           v-if="dress.photo.length > 0"
           class="group-hover:scale-110 transform duration-1000 object-cover w-full h-full"
@@ -35,14 +38,17 @@ export default {
           preload
         />
       </div>
-      <div class="mt-4">
-        <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">
+      <div class="mt-4 <sm:mt-2">
+        <h3
+          v-if="category.slug == 'all'"
+          class="text-gray-500 text-xs tracking-widest title-font mb-1"
+        >
           {{ dress.category.map((item) => item.title).join(", ") }}
         </h3>
-        <h2 class="text-gray-900 title-font text-lg font-medium">
+        <h2 class="text-gray-900 title-font text-lg font-medium <sm:text-sm">
           {{ dress.title }}
         </h2>
-        <p class="mt-1">
+        <p class="mt-1 <sm:text-sm">
           {{ currentCurrency ? currentCurrency.symbol : "" }}
           {{
             dress.price

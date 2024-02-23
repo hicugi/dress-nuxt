@@ -20,7 +20,6 @@ const category = computed(() => store.category);
 const title = computed(
   () => $t("rent.common_title") + " " + category.value.title.toLowerCase()
 );
-
 const description = computed(() => category.value.description);
 
 const dresses = computed(() => store.dresses);
@@ -78,6 +77,7 @@ const switchCategory = store.switchCategory;
           v-for="(dress, key) in dresses"
           :dress="dress"
           :key="key"
+          :category="category"
         />
       </div>
     </div>
