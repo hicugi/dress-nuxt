@@ -44,6 +44,7 @@ export default {
       "errors",
       "booking",
       "datepikerKey",
+      "dateErr",
     ]),
     ...mapWritableState(useDressBooking, ["date"]),
   },
@@ -155,6 +156,7 @@ export default {
         {{ $t("rent.dress_booking_button_title") }}
       </button>
     </div>
+    <div>{{ dateErr }}</div>
   </div>
 </template>
 
