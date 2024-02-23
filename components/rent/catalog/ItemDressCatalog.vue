@@ -1,6 +1,7 @@
 <script>
 import { mapState } from "pinia";
 import { useCurrencyStore } from "~/stores/CurrencyStore.js";
+import CategoriesTemplate from "~/components/CategoriesTemplate.vue";
 
 export default {
   components: {},
@@ -43,7 +44,7 @@ export default {
           v-if="category.slug == 'all'"
           class="text-gray-500 text-xs tracking-widest title-font mb-1"
         >
-          {{ dress.category.map((item) => item.title).join(", ") }}
+          <CategoriesTemplate :categories="dress.category" />
         </h3>
         <h2 class="text-gray-900 title-font text-lg font-medium <sm:text-sm">
           {{ dress.title }}
