@@ -4,10 +4,14 @@ import { useCurrencyStore } from "~/stores/CurrencyStore.js";
 import { useDressCatalog } from "~/stores/DressCatalog";
 import DressBook from "~/components/rent/catalog/DressBook.vue";
 import useMetaSeo from "~/composables/useMetaSeo";
+import Categories from "~/components/CategoriesTemplate.vue";
+import Messengers from "~/components/rent/Messengers.vue";
 
 export default {
   components: {
     DressBook,
+    Categories,
+    Messengers,
   },
   data() {
     return {
@@ -45,6 +49,13 @@ export default {
     <div class="relative mx-auto max-w-screen-xl px-4 py-8 <sm:py-4">
       <div class="grid grid-cols-1 items-start gap-8 <sm:gap-2 md:grid-cols-2">
         <div class="grid gap-4 <sm:gap-2 md:grid-cols-1">
+          <Messengers
+            v-if="dress.user"
+            :whatsapp="dress.user.phone"
+            :telegram="dress.user.telegram_username"
+            :lang="useI18n().locale.value"
+          />
+
           <NuxtImg
             class="aspect-square w-full h-250 <sm:h-130 rounded-xl object-cover"
             placeholder="/img/placeholder.gif"
@@ -58,6 +69,8 @@ export default {
                 placeholder="/img/placeholder.gif"
                 class="aspect-square w-full h-full rounded-xl object-cover cursor-pointer"
                 @click="photoSelectedIndex = key"
+                format="webp"
+                preload
               />
             </li>
           </ul>
@@ -66,20 +79,18 @@ export default {
         <div class="sticky top-0">
           <div class="mt-8 <sm:mt-2 flex justify-between">
             <div class="w-full space-y-2">
-              <h1 class="text-xl font-bold sm:text-2xl">
+              <h1 class="text-xl font-bold sm:text-2xl <sm:text-sm">
                 {{ dress.title }}
               </h1>
-              <p class="text-sm">
-                {{ dress.category.map((item) => item.title).join(", ") }}
-              </p>
+              <h3 class="text-sm">
+                <Categories :categories="dress.category" />
+              </h3>
             </div>
           </div>
 
           <div class="mt-4">
-            <div class="prose max-w-none">
-              <p>
-                {{ dress.description }}
-              </p>
+            <div class="prose max-w-none <sm:text-sm">
+              {{ dress.description }}
             </div>
           </div>
 
