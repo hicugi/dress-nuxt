@@ -20,7 +20,6 @@ export const useDressBooking = defineStore("dress-booking", {
     errors: [],
     error: [],
     datepikerKey: 0,
-    dateErr: "",
   }),
   actions: {
     async getAwaylableDressDates(dress_id) {
@@ -55,9 +54,7 @@ export const useDressBooking = defineStore("dress-booking", {
       axios()
         .post("/v1/client/rent/booking/save", {
           ...this.form,
-          date: this.date
-            ? new Date(this.date).toLocaleDateString("en-CA")
-            : "",
+          date: this.date ?? "",
         })
         .then((response) => {
           this.$patch({
@@ -70,8 +67,6 @@ export const useDressBooking = defineStore("dress-booking", {
           }
         })
         .catch((error) => {
-          this.dateErr =
-            this.date + " " + new Date(this.date).toLocaleDateString("en-CA");
           this.errors = error.response.data.errors;
           if (
             this.errors?.quantity?.includes(
