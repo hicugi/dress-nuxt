@@ -57,6 +57,8 @@
     "dress_price": "Price",
     "dress_price_in_day": "24 hours",
 
+    "dress_booking_question_to_manager": "If you have any questions, ask the manager",
+    "dress_booking_i_have_question": "I have a question (ask a question without waiting for the manager to answer)",
     "dress_booking_form_title": "To book, select a date and fill out the form below",
     "dress_booking_quantity": "Quantity",
     "dress_booking_quantity_available": "Available",

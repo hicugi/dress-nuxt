@@ -57,6 +57,8 @@
     "dress_price": "Бағасы",
     "dress_price_in_day": "24 сағат",
 
+    "dress_booking_question_to_manager": "Сұрақтарыңыз болса, менеджерден сұраңыз",
+    "dress_booking_i_have_question": "Менің сұрағым бар (менеджердің жауабын күтпей сұрақ қойыңыз)",
     "dress_booking_form_title": "Брондау үшін күнді таңдап, төмендегі пішінді толтырыңыз",
     "dress_booking_quantity": "Саны",
     "dress_booking_quantity_available": "Қол жетімді",

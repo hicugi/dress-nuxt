@@ -57,6 +57,8 @@
     "dress_price": "Цена",
     "dress_price_in_day": "сутки",
 
+    "dress_booking_question_to_manager": "Есть вопросы, задайти их менеджеру",
+    "dress_booking_i_have_question": "У меня есть вопрос (задавайте вопрос, не ожидая ответа менеджера)",
     "dress_booking_form_title": "Для бронирования выберите дату и заполните форму ниже",
     "dress_booking_quantity": "Количество",
     "dress_booking_quantity_available": "доступно",
