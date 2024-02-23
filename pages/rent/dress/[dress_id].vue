@@ -5,16 +5,17 @@ import { useDressCatalog } from "~/stores/DressCatalog";
 import DressBook from "~/components/rent/catalog/DressBook.vue";
 import useMetaSeo from "~/composables/useMetaSeo";
 import Categories from "~/components/CategoriesTemplate.vue";
+import Messengers from "~/components/rent/Messengers.vue";
 
 export default {
   components: {
     DressBook,
     Categories,
+    Messengers,
   },
   data() {
     return {
       photoSelectedIndex: 0,
-      frontURL: "",
     };
   },
   async created() {
@@ -30,10 +31,6 @@ export default {
       description: dress.value.description,
       imgPath: dress.value?.photo?.[0]?.image || undefined,
     });
-
-    const runtimeConfig = useRuntimeConfig().public.NUXT_PUBLIC_SITE_URL;
-    const localeRoute = useLocalePath();
-    this.frontURL = runtimeConfig + localeRoute();
   },
   methods: {
     ...mapActions(useCurrencyStore, ["loadCurrencies"]),
@@ -51,37 +48,12 @@ export default {
   <section v-if="dress">
     <div class="relative mx-auto max-w-screen-xl px-4 py-8 <sm:py-4">
       <div class="grid grid-cols-1 items-start gap-8 <sm:gap-2 md:grid-cols-2">
-        <div class="text-sm flex">
-          {{ $t("rent.dress_booking_question_to_manager") }}:
-          <NuxtLink
-            v-if="dress.user.phone"
-            :to="
-              'https://wa.me/' +
-              dress.user.phone +
-              '/' +
-              `?text=${frontURL}%0A${$t('rent.dress_booking_i_have_question')}`
-            "
-            target="_blank"
-            class="hover"
-          >
-            <NuxtImg width="20" class="ml-2" src="/icons8-whatsapp.svg" />
-          </NuxtLink>
-
-          <NuxtLink
-            v-if="dress.user.telegram_username"
-            :to="
-              `https://t.me/${dress.user.telegram_username}?text=` +
-              encodeURIComponent(
-                `${frontURL}%0A${$t('rent.dress_booking_i_have_question')}`
-              )
-            "
-            target="_blank"
-            class="hover"
-          >
-            <NuxtImg width="20" class="ml-2" src="/icons8-telegram.svg" />
-          </NuxtLink>
-        </div>
         <div class="grid gap-4 <sm:gap-2 md:grid-cols-1">
+          <Messengers
+            :whatsapp="dress.user.phone"
+            :telegram="dress.user.telegram_username"
+          />
+
           <NuxtImg
             class="aspect-square w-full h-250 <sm:h-130 rounded-xl object-cover"
             placeholder="/img/placeholder.gif"
