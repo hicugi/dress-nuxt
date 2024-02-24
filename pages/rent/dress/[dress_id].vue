@@ -131,12 +131,12 @@ useMetaSeo({
                 {{ currentCurrency ? currentCurrency.symbol : "" }}
                 {{
                   dress.price
-                    .toLocaleString("kk", {
+                    .toLocaleString("en-US", {
                       //style: "currency",
                       //currency: currencyCode,
                       minimumFractionDigits: Math.ceil(dress.price % 1) * 2,
                     })
-                    .replace(" ", ",")
+                    .replace(",", " ")
                 }}
                 / {{ $t("rent.dress_price_in_day") }}
               </p>

@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { defineStore } from "pinia";
 
 import axios from "~/composables/useApi";
@@ -35,7 +36,7 @@ export const useDressBooking = defineStore("dress-booking", {
         });
     },
     getBusyDates(date) {
-      const d = date.toLocaleDateString("en-CA");
+      const d = dayjs(date).format("YYYY-MM-DD");
 
       return (
         date < new Date(+new Date() - 1000 * 60 * 60 * 24 * 1) ||

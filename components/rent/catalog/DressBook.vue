@@ -31,7 +31,6 @@ export default {
     ...mapActions(useDressBooking, [
       "getAwaylableDressDates",
       "getBusyDates",
-      "changeDate",
       "saveBooking",
     ]),
   },
