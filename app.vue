@@ -21,7 +21,7 @@ useHead({
       <template #error="{ error }">
         <p>An error occurred: {{ error }}</p>
       </template>
-      <NuxtPage :key="$route.fullPath" />
+      <NuxtPage />
     </NuxtErrorBoundary>
   </NuxtLayout>
 </template>

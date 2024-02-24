@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { defineStore } from "pinia";
 
 import axios from "~/composables/useApi";
@@ -35,15 +36,29 @@ export const useDressBooking = defineStore("dress-booking", {
         });
     },
     getBusyDates(date) {
-      const d = date.toLocaleDateString("en-CA");
-
-      return (
-        date < new Date(+new Date() - 1000 * 60 * 60 * 24 * 1) ||
-        date > new Date(+new Date() + 1000 * 60 * 60 * 24 * 35) ||
+      const Today = new Date();
+      //const Today2 = new Date();
+      const d = dayjs(date).format("YYYY-MM-DD");
+      // if (d == "2024-03-11")
+      //   console.log(
+      //     new Date(date) < Today2,
+      //     new Date(date) > Today2.setDate(Today2.getDate() + 15),
+      //     this.bookings.find(
+      //       (item) => item.date === d && item.booking[0].free < 1
+      //     )
+      //       ? "true"
+      //       : "false"
+      //   );
+      if (new Date(date) < Today) return true;
+      if (new Date(date) > Today.setDate(Today.getDate() + 40)) return true;
+      if (
         this.bookings.find(
           (item) => item.date === d && item.booking[0].free < 1
         )
-      );
+      )
+        return true;
+
+      return false;
     },
     async changeDate(date) {
       //console.log("xx", date);
@@ -54,9 +69,7 @@ export const useDressBooking = defineStore("dress-booking", {
       axios()
         .post("/v1/client/rent/booking/save", {
           ...this.form,
-          date: this.date
-            ? new Date(this.date).toLocaleDateString("en-CA")
-            : "",
+          date: this.date ?? "",
         })
         .then((response) => {
           this.$patch({

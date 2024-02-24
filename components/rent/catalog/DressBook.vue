@@ -27,13 +27,45 @@ export default {
     const localeRoute = useLocalePath();
     this.frontURL = runtimeConfig + localeRoute();
   },
+  mounted() {
+    setTimeout(() => {
+      this.hightlightBusyDates();
+    }, 500);
+  },
+  // watch: {
+  //   date(newValue, oldValue) {
+  //     console.log(newValue, oldValue, this.getBusyDates(newValue));
+  //     if (this.getBusyDates(newValue)) this.date = oldValue;
+  //     //this.hightlightBusyDates();
+  //   },
+  // },
   methods: {
     ...mapActions(useDressBooking, [
       "getAwaylableDressDates",
       "getBusyDates",
-      "changeDate",
       "saveBooking",
     ]),
+    hightlightBusyDates() {
+      this.$nextTick(() => {
+        const dateButtons = document.querySelectorAll(
+          ".calendar .vtd-datepicker-date"
+        );
+        dateButtons.forEach((dateButton) => {
+          const date = dateButton.getAttribute("data-date");
+          if (this.getBusyDates(date)) {
+            dateButton.classList.add("disabled:text-vtd-secondary-500");
+            dateButton.classList.add("rounded-full");
+            dateButton.classList.add("date-disabled");
+            dateButton.classList.add("disabled:cursor-not-allowed");
+          } else {
+            dateButton.classList.remove("disabled:text-vtd-secondary-500");
+            dateButton.classList.remove("rounded-full");
+            dateButton.classList.remove("date-disabled");
+            dateButton.classList.remove("disabled:cursor-not-allowed");
+          }
+        });
+      });
+    },
   },
   computed: {
     ...mapState(useDressBooking, [
@@ -55,7 +87,8 @@ export default {
   <div v-if="success" class="text-green-500 text-sm">
     {{ $t("rent.dress_booking_save_success") }}
     {{ $t("rent.dress_booking_save_success_send_to_messenger") }}:
-    <div class="block">
+
+    <div class="block justify-center items-center">
       <br />
       <a
         :href="
@@ -73,6 +106,11 @@ export default {
       >
         {{ $t("rent.dress_booking_save_success_send_to_messenger_button") }}
       </a>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   </div>
   <div v-else="success">
@@ -105,7 +143,7 @@ export default {
     </div>
 
     <ClientOnly>
-      <div class="mt-5">
+      <div class="mt-5 calendar">
         <FormErrors :error="errors.date" />
         <VueTailwindDatepicker
           no-input
@@ -115,6 +153,11 @@ export default {
           :disable-date="getBusyDates"
           :formatter="{ date: 'YYYY-MM-DD', month: 'MMM' }"
           :i18n="useI18n()?.locale?.value || 'en'"
+          @select-year="hightlightBusyDates"
+          @select-month="hightlightBusyDates"
+          @click-prev="hightlightBusyDates"
+          @click-next="hightlightBusyDates"
+          disableInRange
         />
       </div>
     </ClientOnly>
@@ -130,6 +173,7 @@ export default {
           class="block p-2 w-70 rounded-md border-1 bg-gray-0 border-gray-300 text-gray-900 text-sm w-half hover:bg-gray-50 hover:text-gray-700 focus:bg-gray-50"
           :placeholder="$t('rent.dress_booking_enter_email')"
           required
+          autocomplete
         />
       </div>
 
@@ -143,6 +187,7 @@ export default {
           class="block p-2 w-70 rounded-md border-1 bg-gray-0 border-gray-300 text-gray-900 text-sm w-half hover:bg-gray-50 hover:text-gray-700 focus:bg-gray-50"
           :placeholder="$t('rent.dress_booking_enter_phone_number')"
           required
+          autocomplete
         />
       </div>
     </div>
@@ -159,7 +204,8 @@ export default {
 </template>
 
 <style>
-.disabled\:text-vtd-secondary-500:disabled {
+.disabled\:text-vtd-secondary-500:disabled,
+.date-disabled:not(:disabled) {
   background: rgb(185, 96, 96) !important;
   /* text-decoration: line-through; */
   color: white !important;
