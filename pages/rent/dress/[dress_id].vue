@@ -5,6 +5,7 @@ import DressBook from "~/components/rent/catalog/DressBook.vue";
 import useMetaSeo from "~/composables/useMetaSeo";
 import Categories from "~/components/CategoriesTemplate.vue";
 import Messengers from "~/components/rent/Messengers.vue";
+import { ref } from "vue";
 
 const currentCurrency = computed(() => useCurrencyStore().currentCurrency);
 
@@ -13,7 +14,10 @@ await useDressCatalog().getDress({
 });
 
 const dress = computed(() => useDressCatalog().dress);
-const photoSelectedIndex = 0;
+const photoSelectedIndex = ref(0);
+const changePhotoSelectedIndex = (index) => {
+  photoSelectedIndex.value = index;
+};
 
 useMetaSeo({
   title: dress.value.title,
@@ -47,7 +51,7 @@ useMetaSeo({
                 :src="photo.image"
                 placeholder="/img/placeholder.gif"
                 class="aspect-square w-full h-full rounded-xl object-cover cursor-pointer"
-                @click="photoSelectedIndex = key"
+                @click="changePhotoSelectedIndex(key)"
                 format="webp"
                 preload
               />
