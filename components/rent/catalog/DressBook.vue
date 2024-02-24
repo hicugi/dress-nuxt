@@ -55,7 +55,8 @@ export default {
   <div v-if="success" class="text-green-500 text-sm">
     {{ $t("rent.dress_booking_save_success") }}
     {{ $t("rent.dress_booking_save_success_send_to_messenger") }}:
-    <div class="block">
+
+    <div class="block justify-center items-center">
       <br />
       <a
         :href="
@@ -73,6 +74,11 @@ export default {
       >
         {{ $t("rent.dress_booking_save_success_send_to_messenger_button") }}
       </a>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   </div>
   <div v-else="success">
@@ -130,6 +136,7 @@ export default {
           class="block p-2 w-70 rounded-md border-1 bg-gray-0 border-gray-300 text-gray-900 text-sm w-half hover:bg-gray-50 hover:text-gray-700 focus:bg-gray-50"
           :placeholder="$t('rent.dress_booking_enter_email')"
           required
+          autocomplete
         />
       </div>
 
@@ -143,6 +150,7 @@ export default {
           class="block p-2 w-70 rounded-md border-1 bg-gray-0 border-gray-300 text-gray-900 text-sm w-half hover:bg-gray-50 hover:text-gray-700 focus:bg-gray-50"
           :placeholder="$t('rent.dress_booking_enter_phone_number')"
           required
+          autocomplete
         />
       </div>
     </div>

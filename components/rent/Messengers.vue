@@ -11,7 +11,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="text-sm flex <sm:mb-1 justify-center items-center">
+  <div class="text-sm flex justify-center items-center">
     {{ $t("rent.dress_booking_question_to_manager") }}:
     <NuxtLink
       v-if="props.whatsapp"

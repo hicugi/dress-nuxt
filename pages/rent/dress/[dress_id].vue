@@ -1,5 +1,4 @@
-<script>
-import { mapActions, mapState } from "pinia";
+<script setup>
 import { useCurrencyStore } from "~/stores/CurrencyStore.js";
 import { useDressCatalog } from "~/stores/DressCatalog";
 import DressBook from "~/components/rent/catalog/DressBook.vue";
@@ -7,40 +6,20 @@ import useMetaSeo from "~/composables/useMetaSeo";
 import Categories from "~/components/CategoriesTemplate.vue";
 import Messengers from "~/components/rent/Messengers.vue";
 
-export default {
-  components: {
-    DressBook,
-    Categories,
-    Messengers,
-  },
-  data() {
-    return {
-      photoSelectedIndex: 0,
-    };
-  },
-  async created() {
-    const route = useRoute();
-    const { data: dress } = await useAsyncData("dress", () =>
-      this.getDress({
-        dress_id: route.params.dress_id || undefined,
-      })
-    );
+const currentCurrency = computed(() => useCurrencyStore().currentCurrency);
 
-    useMetaSeo({
-      title: dress.value.title,
-      description: dress.value.description,
-      imgPath: dress.value?.photo?.[0]?.image || undefined,
-    });
-  },
-  methods: {
-    ...mapActions(useCurrencyStore, ["loadCurrencies"]),
-    ...mapActions(useDressCatalog, ["getDress", "saveBooking"]),
-  },
-  computed: {
-    ...mapState(useCurrencyStore, ["currentCurrency", "currencies"]),
-    ...mapState(useDressCatalog, ["dress"]),
-  },
-};
+await useDressCatalog().getDress({
+  dress_id: useRoute().params.dress_id,
+});
+
+const dress = computed(() => useDressCatalog().dress);
+const photoSelectedIndex = 0;
+
+useMetaSeo({
+  title: dress.value.title,
+  description: dress.value.description,
+  imgPath: dress.value?.photo?.[0]?.image || undefined,
+});
 </script>
 
 <template>
@@ -77,9 +56,9 @@ export default {
         </div>
 
         <div class="sticky top-0">
-          <div class="mt-8 <sm:mt-2 flex justify-between">
+          <div class="mt-8 <md:mt-0 flex justify-between">
             <div class="w-full space-y-2">
-              <h1 class="text-xl font-bold sm:text-2xl <sm:text-sm">
+              <h1 class="text-xl font-bold sm:text-lg <sm:text-sm">
                 {{ dress.title }}
               </h1>
               <h3 class="text-sm">
@@ -159,7 +138,7 @@ export default {
               </p>
             </div>
 
-            <DressBook v-if="dress" :dress_id="dress.dress_id" />
+            <DressBook :dress_id="dress.dress_id" />
           </form>
         </div>
       </div>
