@@ -36,29 +36,16 @@ export const useDressBooking = defineStore("dress-booking", {
         });
     },
     getBusyDates(date) {
-      const Today = new Date();
-      //const Today2 = new Date();
       const d = dayjs(date).format("YYYY-MM-DD");
-      // if (d == "2024-03-11")
-      //   console.log(
-      //     new Date(date) < Today2,
-      //     new Date(date) > Today2.setDate(Today2.getDate() + 15),
-      //     this.bookings.find(
-      //       (item) => item.date === d && item.booking[0].free < 1
-      //     )
-      //       ? "true"
-      //       : "false"
-      //   );
-      if (new Date(date) < Today) return true;
-      if (new Date(date) > Today.setDate(Today.getDate() + 40)) return true;
+
       if (
         this.bookings.find(
-          (item) => item.date === d && item.booking[0].free < 1
+          (item) => item.date === d && item.booking[0].free > 0
         )
       )
-        return true;
+        return false;
 
-      return false;
+      return true;
     },
     async changeDate(date) {
       //console.log("xx", date);
