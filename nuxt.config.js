@@ -14,7 +14,7 @@ import axios from "axios";
 // };
 
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   //debug: true,
   // sourcemap: {
   //   server: true,
