@@ -15,7 +15,7 @@ const stringToSlug = require("./utils/stringToSlug");
 // };
 
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   //debug: true,
   // sourcemap: {
   //   server: true,
