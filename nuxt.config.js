@@ -108,7 +108,7 @@ export default defineNuxtConfig({
       const { data: dataCategories } = await axios.get(
         (process.env.NUXT_API_URL ?? "http://localhost/api/") +
           "v1/client/rent/category/list?per_page=100&lang=" +
-          lang
+          defaultLang
       );
 
       const categoryMap = dataCategories.data.map((category) => ({
@@ -126,7 +126,7 @@ export default defineNuxtConfig({
       const { data } = await axios.get(
         (process.env.NUXT_API_URL ?? "http://localhost/api/") +
           "v1/client/rent/dress/list?per_page=100&lang=" +
-          lang
+          defaultLang
       );
 
       return [
