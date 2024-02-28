@@ -1,4 +1,5 @@
-import axios from "axios";
+const axios = require("axios");
+const stringToSlug = require("./utils/stringToSlug");
 
 // const loadLanguages = async () => {
 //   return await axios()
@@ -99,31 +100,64 @@ export default defineNuxtConfig({
   ssr: true,
   sitemap: {
     enabled: true,
-    autoI18n: true,
+    autoI18n: false,
     xsl: false,
-    //sitemaps: true,
     urls: async () => {
-      const { data } = await axios.get(
+      const defaultLang = process.env.NUXT_DEFAULT_LOCALE || "en";
+
+      const { data: dataCategories } = await axios.get(
         (process.env.NUXT_API_URL ?? "http://localhost/api/") +
-          "v1/client/rent/dress/list?per_page=100",
-        {
-          params: {
-            //category_id: this.category.category_id,
-            //lang,
-            //currency,
-          },
-        }
+          "v1/client/rent/category/list?per_page=100&lang=" +
+          lang
       );
 
-      return data.data.map((dress) => ({
-        loc: `rent/dress/${dress.dress_id}`,
-        lastmod: dress.updated_at,
+      const categoryMap = dataCategories.data.map((category) => ({
+        loc: `/${defaultLang}/rent/c/${stringToSlug(category.title)}`,
+        // alternatives: ["en", "ru", "kk", "x-default"].map((lang) => ({
+        //   hreflang: lang,
+        //   href: `/${
+        //     lang == "x-default" ? defaultLang : lang
+        //   }/rent/c/${stringToSlug(category.title)}`,
+        // })),
+        priority: 1.0,
         changefreq: "weekly",
-        priority: 0.8,
-        image: dress.photo.map((photo) => {
-          return { loc: photo.image };
-        }),
       }));
+
+      const { data } = await axios.get(
+        (process.env.NUXT_API_URL ?? "http://localhost/api/") +
+          "v1/client/rent/dress/list?per_page=100&lang=" +
+          lang
+      );
+
+      return [
+        ...categoryMap,
+        ...data.data.map((dress) => ({
+          loc: `/${defaultLang}/rent/dress/${dress.dress_id}`,
+          alternatives: ["en", "ru", "kk", "x-default"].map((lang) => ({
+            hreflang: lang,
+            href: `/${lang == "x-default" ? defaultLang : lang}/rent/dress/${
+              dress.dress_id
+            }`,
+          })),
+          lastmod: dress.updated_at,
+          changefreq: "monthly",
+          priority: 1.0,
+          image: dress.photo.map((photo) => {
+            return { loc: photo.image };
+          }),
+        })),
+      ];
+    },
+    filter({ routes }) {
+      return routes.map((route) => {
+        route.links = [
+          ["kk", "ru", "en"].map((lang) => ({
+            lang: lang,
+            url: `${lang}/${url}`,
+          })),
+        ];
+        return route;
+      });
     },
   },
   gtag: {
