@@ -49,7 +49,8 @@ export default defineNuxtConfig({
     "nuxt-simple-robots",
     "nuxt-gtag",
     "@nuxt/image",
-    "@nuxtjs/sitemap",
+    //"@nuxtjs/sitemap",
+    "nuxt-simple-sitemap",
   ],
   alias: {
     pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs",
