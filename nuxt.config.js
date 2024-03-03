@@ -50,7 +50,6 @@ export default defineNuxtConfig({
     "nuxt-gtag",
     "@nuxt/image",
     "@nuxtjs/sitemap",
-    "yandex-metrika-module-nuxt3",
   ],
   alias: {
     pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs",
@@ -163,7 +162,7 @@ export default defineNuxtConfig({
   gtag: {
     id: process.env.NUXT_GTAG ?? "",
   },
-  yandexMetrika: {
-    id: process.env.NUXT_YANDEX_METRIKA_ID ?? "",
-  },
+  // yandexMetrika: {
+  //   id: process.env.NUXT_YANDEX_METRIKA_ID ?? "",
+  // },
 });
