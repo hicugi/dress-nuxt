@@ -1,57 +1,40 @@
 import { defineStore } from "pinia";
 
-import useApiCore from "~/composables/useApiCore";
+import { useApiFetch } from "~/composables/useApiFetch";
 
 export const useAuthStore = defineStore("auth-store", {
   state: () => ({
-    email: "",
-    password: "",
+    email: "admin@admin.com",
+    password: "ygb8o260nm34upvqdjkz",
     errors: [],
-    access_token: process.client
-      ? localStorage.getItem("access_token") ?? ""
-      : "",
-    refresh_token: process.client
-      ? localStorage.getItem("refresh_token") ?? ""
-      : "",
     user: null,
   }),
   actions: {
     async login() {
-      console.log(this.email);
       this.errors = [];
-      await $fetch("v1/auth/login", {
-        baseURL: useRuntimeConfig().public.NUXT_API_URL,
+      await useApiFetch("v1/auth/login", {
         method: "post",
         body: {
           email: this.email,
           password: this.password,
         },
       })
-        .then((resp) => {
-          this.$patch({
-            password: "",
-            email: "",
-            access_token: resp.data.access_token,
-            refresh_token: resp.data.refresh_token,
-            user: resp.data.user,
+        .then(({ data, error }) => {
+          useAuthStore().$patch({
+            //password: "",
+            //email: "",
+            user: data.value.data,
           });
 
-          console.log("auth", resp.data);
-
-          if (process.client) {
-            localStorage.setItem("access_token", this.access_token);
-            localStorage.setItem("refresh_token", this.refresh_token);
-          }
-          //useRouter().push({ path: "/sadmin/rent/dress" });
-
-          //axios.defaults.headers.common.Authorization = `Bearer ${access_token}`;
+          const accessToken = useCookie("access_token");
+          accessToken.value = data.value.access_token;
+          console.log("accessToken SET", accessToken);
+          navigateTo("/ru/sadmin/rent/dress");
         })
         .catch((error) => {
           this.errors = error?.response?.data?.errors || [];
-          localStorage.removeItem("access_token");
-          localStorage.removeItem("refresh_token");
-          localStorage.removeItem("userPermissions");
-          //delete axios.defaults.headers.common.Authorization;
+          this.access_token = "";
+          this.refresh_token = "";
         });
     },
     logout() {
@@ -60,7 +43,6 @@ export const useAuthStore = defineStore("auth-store", {
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
       //localStorage.removeItem('userPermissions')
-      delete axios.defaults.headers.common.Authorization;
       this.$reset();
       this.router.push({ name: "login" });
     },
@@ -87,10 +69,8 @@ export const useAuthStore = defineStore("auth-store", {
       }
     },
     async getAuthUser() {
-      if (this.access_token && !this.user) {
-        axios.defaults.headers.common.Authorization = `Bearer ${this.access_token}`;
-        await axios
-          .get("/v1/user/auth")
+      if (!this.user) {
+        await useApiFetch("/v1/user/auth")
           .then((resp) => {
             this.user = resp.data.data;
           })

@@ -3,8 +3,6 @@ import { useAuthStore } from "~/stores/AuthStore";
 
 const storeAuth = useAuthStore();
 
-const email = computed(() => storeAuth.email);
-const password = computed(() => storeAuth.password);
 const submit = (e) => {
   e.preventDefault();
   storeAuth.login();
