@@ -162,7 +162,7 @@ export default defineNuxtConfig({
   gtag: {
     id: process.env.NUXT_GTAG ?? "",
   },
-  yandexMetrika: {
-    id: process.env.NUXT_YANDEX_METRIKA_ID ?? "",
-  },
+  // yandexMetrika: {
+  //   id: process.env.NUXT_YANDEX_METRIKA_ID ?? "",
+  // },
 });
