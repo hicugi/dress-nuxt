@@ -73,7 +73,7 @@ await store.loadDressCatalog({});
                       :key="index"
                       class="h-auto w-1/6"
                     >
-                      <NuxtImg :src="photo.image" />
+                      <img :src="photo.image" />
                     </div>
                   </div>
                 </th>

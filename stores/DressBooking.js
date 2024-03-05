@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
 import { defineStore } from "pinia";
 
-import axios from "~/composables/useApi";
 import useApiCore from "~/composables/useApiCore";
 
 export const useDressBooking = defineStore("dress-booking", {
@@ -27,13 +26,12 @@ export const useDressBooking = defineStore("dress-booking", {
       this.form.dress_id = dress_id;
       await useApiCore("v1/client/rent/booking/available", {
         params: { dress_id },
-      })
-        .then((response) => {
-          this.bookings = response.data.value.data;
-        })
-        .catch((error) => {
-          this.errors = error.response.data.errors;
-        });
+      }).then(({ data, error }) => {
+        if (data.value) this.bookings = data.value.data;
+        else if (error.value) {
+          this.errors = error.value.data.errors;
+        }
+      });
     },
     getBusyDates(date) {
       const d = dayjs(date).format("YYYY-MM-DD");
@@ -53,23 +51,24 @@ export const useDressBooking = defineStore("dress-booking", {
     saveBooking(e) {
       e.preventDefault();
       this.errors = [];
-      axios()
-        .post("/v1/client/rent/booking/save", {
+      useApiCore("/v1/client/rent/booking/save", {
+        method: "POST",
+        params: {
           ...this.form,
           date: this.date ?? "",
-        })
-        .then((response) => {
+        },
+      }).then(({ data, error }) => {
+        if (data.value) {
           this.$patch({
-            booking: response.data.data,
+            booking: data.value.data,
             success: true,
           });
           if (process.client) {
             localStorage.setItem("email", this.form.email);
             localStorage.setItem("phone_number", this.form.phone_number);
           }
-        })
-        .catch((error) => {
-          this.errors = error.response.data.errors;
+        } else if (error.value) {
+          this.errors = error.value.data.errors;
           if (
             this.errors?.quantity?.includes(
               "dress_booking_save_dress_quantity_less_then_needed"
@@ -82,7 +81,8 @@ export const useDressBooking = defineStore("dress-booking", {
               });
             });
           }
-        });
+        }
+      });
     },
   },
 });

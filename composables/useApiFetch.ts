@@ -7,7 +7,7 @@ export async function useApiFetch<T>(
   options: UseFetchOptions<T> = {}
 ) {
   const accessToken = useCookie("access_token");
-  console.log("useCookie accessToken", accessToken.value);
+  //console.log("useCookie accessToken", accessToken.value);
   const config = useRuntimeConfig();
 
   const defaults: UseFetchOptions<T> = {
@@ -51,10 +51,10 @@ export async function useApiFetch<T>(
         break;
     }
   }
-  console.log("=========");
-  console.log("apiCore", url);
-  console.log("data", data.value);
-  console.log("error", error);
-  console.log("=========");
+  // console.log("=========");
+  // console.log("apiCore", url);
+  // console.log("data", data.value);
+  // console.log("error", error);
+  // console.log("=========");
   return { data, error };
 }

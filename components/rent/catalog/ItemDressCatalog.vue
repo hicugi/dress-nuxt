@@ -32,13 +32,12 @@ export default {
           })
         "
       >
-        <NuxtImg
+        <img
           v-if="dress.photo.length > 0"
           class="group-hover:scale-110 transform duration-1000 object-cover w-full h-full"
           :src="dress.photo[0].image"
           :alt="dress.title"
           placeholder="/img/placeholder.gif"
-          preload
         />
       </NuxtLink>
     </div>

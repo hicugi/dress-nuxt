@@ -39,7 +39,7 @@ useMetaSeo({
             :lang="useI18n().locale.value"
           />
 
-          <NuxtImg
+          <img
             class="aspect-square w-full h-250 <sm:h-130 rounded-xl object-cover"
             placeholder="/img/placeholder.gif"
             :src="dress.photo[photoSelectedIndex].image"
@@ -47,7 +47,7 @@ useMetaSeo({
           />
           <ul class="mt-1 flex gap-5 <sm:gap-2">
             <li v-for="(photo, key) in dress.photo" :key="key" class="h-50">
-              <NuxtImg
+              <img
                 :src="photo.image"
                 placeholder="/img/placeholder.gif"
                 class="aspect-square w-full h-full rounded-xl object-cover cursor-pointer"

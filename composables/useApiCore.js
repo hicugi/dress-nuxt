@@ -3,7 +3,7 @@ import { useAuthStore } from "~/stores/AuthStore";
 export default async (url, options = {}) => {
   const config = useRuntimeConfig();
   //console.log(config.public.NUXT_API_URL + url);
-  console.log("access_token", useAuthStore().access_token);
+  //console.log("access_token", useAuthStore().access_token);
   const { data, error } = await useFetch(url, {
     baseURL: config.public.NUXT_API_URL,
     ...options,
@@ -16,14 +16,10 @@ export default async (url, options = {}) => {
     //   }
     // },
     onRequestError({ request, options, error }) {
-      console.log("onResponseError", error);
-    },
-    onResponseError({ request, response, options }) {
-      console.log("onResponseError", response);
-      // Handle the response errors
+      //console.log("onResponseError", error);
     },
     async onResponseError({ response, options }) {
-      console.log("onResponseError", response, options);
+      //console.log("onResponseError", response, options);
       // if (response.status === 401) {
       //   await useFetch('/auth/refresh', {
       //     baseURL: config.public.apiBaseUrl,
@@ -51,9 +47,9 @@ export default async (url, options = {}) => {
     }
   }
 
-  console.log("=========");
-  console.log("apiCore", url);
-  console.log("data", data.value);
-  console.log("error", error.value);
+  // console.log("=========");
+  // console.log("apiCore", url);
+  // console.log("data", data.value);
+  // console.log("error", error.value);
   return { data, error };
 };

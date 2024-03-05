@@ -38,7 +38,7 @@ export const useAuthStore = defineStore("auth-store", {
         });
     },
     logout() {
-      if (this.access_token) axios.post("/v1/auth/logout");
+      //if (this.access_token) axios.post("/v1/auth/logout");
 
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
@@ -46,28 +46,28 @@ export const useAuthStore = defineStore("auth-store", {
       this.$reset();
       this.router.push({ name: "login" });
     },
-    refresh() {
-      if (this.refresh_token) {
-        axios
-          .post("/v1/auth/refresh", { refresh_token: this.refresh_token })
-          .then((resp) => {
-            const { access_token, refresh_token, user } = resp.data;
-            this.access_token = access_token;
-            this.refresh_token = refresh_token;
-            this.user = user;
+    // refresh() {
+    //   if (this.refresh_token) {
+    //     axios
+    //       .post("/v1/auth/refresh", { refresh_token: this.refresh_token })
+    //       .then((resp) => {
+    //         const { access_token, refresh_token, user } = resp.data;
+    //         this.access_token = access_token;
+    //         this.refresh_token = refresh_token;
+    //         this.user = user;
 
-            axios.defaults.headers.common.Authorization = `Bearer ${this.access_token}`;
-          })
-          .catch(() => {
-            localStorage.removeItem("access_token");
-            localStorage.removeItem("refresh_token");
-            //localStorage.removeItem('userPermissions')
-            delete axios.defaults.headers.common.Authorization;
-            this.$reset();
-            this.router.push({ name: "login" });
-          });
-      }
-    },
+    //         axios.defaults.headers.common.Authorization = `Bearer ${this.access_token}`;
+    //       })
+    //       .catch(() => {
+    //         localStorage.removeItem("access_token");
+    //         localStorage.removeItem("refresh_token");
+    //         //localStorage.removeItem('userPermissions')
+    //         delete axios.defaults.headers.common.Authorization;
+    //         this.$reset();
+    //         this.router.push({ name: "login" });
+    //       });
+    //   }
+    // },
     async getAuthUser() {
       if (!this.user) {
         await useApiFetch("/v1/user/auth")
