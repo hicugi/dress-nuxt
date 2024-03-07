@@ -33,9 +33,9 @@ export default {
         "
       >
         <img
-          v-if="dress.photo.length > 0"
+          v-if="dress.photos.length > 0"
           class="group-hover:scale-110 transform duration-1000 object-cover w-full h-full"
-          :src="dress.photo[0].image"
+          :src="dress.photos[0].image"
           :alt="dress.title"
           placeholder="/img/placeholder.gif"
         />
@@ -46,7 +46,7 @@ export default {
         v-if="category.slug == 'all'"
         class="text-gray-500 text-xs tracking-widest title-font mb-1"
       >
-        <CategoriesTemplate :categories="dress.category" />
+        <CategoriesTemplate :categories="dress.categories" />
       </h3>
       <h2 class="text-gray-900 title-font text-lg font-medium <sm:text-sm">
         <NuxtLink

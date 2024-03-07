@@ -142,25 +142,23 @@ export default {
       </span>
     </div>
 
-    <ClientOnly>
-      <div class="mt-5 calendar">
-        <FormErrors :error="errors.date" />
-        <VueTailwindDatepicker
-          no-input
-          as-single
-          :key="datepikerKey"
-          v-model="date"
-          :disable-date="getBusyDates"
-          :formatter="{ date: 'YYYY-MM-DD', month: 'MMM' }"
-          :i18n="useI18n()?.locale?.value || 'en'"
-          @select-year="hightlightBusyDates"
-          @select-month="hightlightBusyDates"
-          @click-prev="hightlightBusyDates"
-          @click-next="hightlightBusyDates"
-          disableInRange
-        />
-      </div>
-    </ClientOnly>
+    <div class="mt-5 calendar">
+      <FormErrors :error="errors.date" />
+      <VueTailwindDatepicker
+        no-input
+        as-single
+        :key="datepikerKey"
+        v-model="date"
+        :disable-date="getBusyDates"
+        :formatter="{ date: 'YYYY-MM-DD', month: 'MMM' }"
+        :i18n="useI18n()?.locale?.value || 'en'"
+        @select-year="hightlightBusyDates"
+        @select-month="hightlightBusyDates"
+        @click-prev="hightlightBusyDates"
+        @click-next="hightlightBusyDates"
+        disableInRange
+      />
+    </div>
 
     <div class="mt-5">
       <FormErrors :error="errors.email" />
