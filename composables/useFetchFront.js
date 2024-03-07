@@ -36,13 +36,22 @@ export const useFetchFront = async (url, options = {}) => {
     .then((response) => {
       return { data: response, error: null, errors: [] };
     })
-    .catch((error) => {
+    .catch(async (error) => {
       // console.log(error);
       // console.log(error.response);
       // console.log(error.data);
-      if (error.response.status == 400)
-        return { data: null, error: null, errors: error.data.errors };
-      else return { data: null, error, errors: [] };
+      switch (error.response.status) {
+        case 400:
+          return { data: null, error: null, errors: error.data.errors };
+          break;
+        case 401:
+          await navigateTo({
+            name: "auth-login___" + useLangStore().currentLocale,
+          });
+          break;
+        default:
+          return { data: null, error, errors: [] };
+      }
     });
 
   // console.log("=========");

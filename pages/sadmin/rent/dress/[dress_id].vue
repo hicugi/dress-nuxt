@@ -14,25 +14,27 @@ const form = ref({
   dress_id,
   quantity: storeDressCatalog.dress?.quantity || 0,
   categories:
-    storeDressCatalog.dress?.category.map((category) => category.category_id) ||
-    [],
-  colors: storeDressCatalog.dress?.color.map((color) => color.color_id) || [],
-  sizes: storeDressCatalog.dress?.size.map((size) => size.size_id) || [],
+    storeDressCatalog.dress?.categories.map(
+      (category) => category.category_id
+    ) || [],
+  colors: storeDressCatalog.dress?.colors.map((color) => color.color_id) || [],
+  sizes: storeDressCatalog.dress?.sizes.map((size) => size.size_id) || [],
   translations: [],
-  photos: storeDressCatalog.dress?.photo.map((photo) => photo.image) || [],
+  photos: storeDressCatalog.dress?.photos.map((photo) => photo.image) || [],
 });
 
-storeLang.languages.map((language) => {
-  const translation = storeDressCatalog.dress.translations.find(
-    ({ language: locale }) => locale == language.locale
-  );
-  form.value.translations.push({
-    locale: language.locale,
-    title: translation?.title || "",
-    description: translation?.description || "",
-    placeholder: language.title,
+if (storeDressCatalog?.dress?.translations.length)
+  storeLang.languages.map((language) => {
+    const translation = storeDressCatalog.dress.translations.find(
+      ({ language: locale }) => locale == language.locale
+    );
+    form.value.translations.push({
+      locale: language.locale,
+      title: translation?.title || "",
+      description: translation?.description || "",
+      placeholder: language.title,
+    });
   });
-});
 
 const categories = computed(() => storeDressCatalog.categories);
 const colors = computed(() => storeDressCatalog.colors);

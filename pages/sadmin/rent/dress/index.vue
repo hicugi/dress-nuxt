@@ -81,7 +81,7 @@ await store.loadDressCatalog({});
                   </div>
                   <div class="flex">
                     <div
-                      v-for="(photo, index) in dress.photo"
+                      v-for="(photo, index) in dress.photos"
                       :key="index"
                       class="h-auto w-1/6"
                     >
@@ -91,7 +91,7 @@ await store.loadDressCatalog({});
                 </th>
                 <td class="px-4 py-2">
                   <div
-                    v-for="category in dress.category"
+                    v-for="category in dress.categories"
                     class="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300"
                   >
                     -&nbsp;{{ category.title }}

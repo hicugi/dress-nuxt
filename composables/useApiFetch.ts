@@ -57,7 +57,9 @@ export async function useApiFetch<T>(
         //case 419:
         //const authStore = useAuthStore();
         //authStore.user = null;
-        await navigateTo({ path: "/auth/login" });
+        await navigateTo({
+          name: "auth-login___" + useLangStore().currentLocale,
+        });
         break;
     }
 
