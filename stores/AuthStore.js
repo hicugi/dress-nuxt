@@ -1,35 +1,41 @@
 import { defineStore } from "pinia";
 
 import { useApiFetch } from "~/composables/useApiFetch";
+import { useFetchFront } from "~/composables/useFetchFront";
 
 export const useAuthStore = defineStore("auth-store", {
   state: () => ({
     email: "admin@admin.com",
-    password: "ygb8o260nm34upvqdjkz",
+    password: "lro3wtyqi61ba5vmkcsn",
     errors: [],
     user: null,
   }),
   actions: {
     async login() {
       this.errors = [];
-      await useApiFetch("v1/auth/login", {
+      await useFetchFront("v1/auth/login", {
         method: "post",
         body: {
           email: this.email,
           password: this.password,
         },
       })
-        .then(({ data, error }) => {
-          useAuthStore().$patch({
-            //password: "",
-            //email: "",
-            user: data.value.data,
-          });
+        .then(async ({ data, error, errors }) => {
+          if (data) {
+            useAuthStore().$patch({
+              //password: "",
+              //email: "",
+              user: data.data,
+            });
 
-          const accessToken = useCookie("access_token");
-          accessToken.value = data.value.access_token;
-          console.log("accessToken SET", accessToken);
-          navigateTo("/ru/sadmin/rent/dress");
+            const accessToken = useCookie("access_token");
+            accessToken.value = data.access_token;
+            navigateTo({
+              name: "sadmin-rent-dress___" + useLangStore().currentLocale,
+            });
+          }
+
+          this.errors = errors;
         })
         .catch((error) => {
           this.errors = error?.response?.data?.errors || [];

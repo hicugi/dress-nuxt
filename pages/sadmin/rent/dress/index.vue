@@ -7,7 +7,7 @@ await store.loadDressCatalog({});
 
 <template>
   <section class="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
-    <div class="px-4 mx-auto max-w-screen-2xl lg:px-12">
+    <div class="px-5 mx-auto max-w-screen">
       <div
         class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg"
       >
@@ -65,7 +65,19 @@ await store.loadDressCatalog({});
                   class="items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
                   <div class="mb-2">
-                    {{ dress.title }}
+                    <NuxtLink
+                      :to="
+                        localePath({
+                          name: 'sadmin-rent-dress-dress_id',
+                          params: {
+                            dress_id: dress.dress_id,
+                          },
+                        })
+                      "
+                      class="flex items-center cursor-pointer"
+                    >
+                      {{ dress.title }}
+                    </NuxtLink>
                   </div>
                   <div class="flex">
                     <div

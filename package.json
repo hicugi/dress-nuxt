@@ -5,7 +5,7 @@
   "scripts": {
     "start": "pm2 start ecosystem.config.cjs",
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --port 3030",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"

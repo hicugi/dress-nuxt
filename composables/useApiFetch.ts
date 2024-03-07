@@ -7,12 +7,13 @@ export async function useApiFetch<T>(
   options: UseFetchOptions<T> = {}
 ) {
   const accessToken = useCookie("access_token");
-  //console.log("useCookie accessToken", accessToken.value);
+  console.log("useCookie accessToken", accessToken.value);
   const config = useRuntimeConfig();
 
   const defaults: UseFetchOptions<T> = {
     baseURL: config.public.NUXT_API_URL,
     key: url,
+    initialCache: false,
 
     // set user token if connected
     headers: accessToken.value
@@ -36,25 +37,50 @@ export async function useApiFetch<T>(
   // for nice deep defaults, please use unjs/defu
   const params = defu(options, defaults);
 
-  const { data, error } = await useFetch(url, params);
+  let errors = [];
+  const { data, error, status } = await useFetch(url, params);
 
-  if (error?.value?.data?.error) {
-    switch (error?.value?.data?.error) {
-      case "jwt_token_not_received":
-        navigateTo("/ru/auth");
+  console.log("=========");
+  console.log("apiCore", url, "status", status.value);
+  console.log("data", data.value);
+  console.log("error", error?.value?.data?.error);
+  console.log("error", error.value ? error : error.value);
+
+  if (status.value !== "success" && error.value) {
+    console.log(error.value.statusCode);
+    switch (error.value.statusCode) {
+      case 400:
+        errors = error.value.data.errors;
         break;
-      case "jwt_expired_token":
-        navigateTo("/ru/auth");
-        break;
-      case "jwt_invalid_token":
-        navigateTo("/ru/auth");
+
+      case 401:
+        //case 419:
+        //const authStore = useAuthStore();
+        //authStore.user = null;
+        await navigateTo({ path: "/auth/login" });
         break;
     }
+
+    // if (error?.value?.data?.error) {
+    //   switch (error?.value?.data?.error) {
+    //     case "jwt_token_not_received":
+    //       navigateTo("/ru/auth/login");
+    //       break;
+    //     case "jwt_expired_token":
+    //       console.log("xxxx");
+    //       navigateTo({ path: "/" });
+    //       useRouter().push({ path: "/" });
+    //       console.log("xxxx");
+    //       break;
+    //     case "jwt_invalid_token":
+    //       navigateTo("/ru/auth/login");
+    //       break;
+    //     case "jwt_user_not_have_permission_on_resource":
+    //       console.log("jwt_user_not_have_permission_on_resource");
+    //       break;
+    //   }
+    // }
+    console.log("=========");
   }
-  // console.log("=========");
-  // console.log("apiCore", url);
-  // console.log("data", data.value);
-  // console.log("error", error);
-  // console.log("=========");
-  return { data, error };
+  return { data: data.value, error: error.value, status, errors };
 }
