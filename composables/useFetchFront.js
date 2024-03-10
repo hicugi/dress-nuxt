@@ -48,6 +48,7 @@ export const useFetchFront = async (url, options = {}) => {
           await navigateTo({
             name: "auth-login___" + useLangStore().currentLocale,
           });
+          return { data: null, error: error.data.error, errors: [] };
           break;
         default:
           return { data: null, error, errors: [] };

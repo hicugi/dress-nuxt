@@ -2,7 +2,7 @@
 import { useAdminRentDressCatalogStore } from "~/stores/admin/DressCatalogRentAdmin";
 const store = useAdminRentDressCatalogStore();
 const dresses = computed(() => store.dresses);
-await store.loadDressCatalog({});
+store.loadDressCatalog({});
 </script>
 
 <template>
@@ -12,6 +12,22 @@ await store.loadDressCatalog({});
         class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg"
       >
         <div class="overflow-x-auto">
+          <div
+            class="float-right my-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            <NuxtLink
+              :to="
+                localePath({
+                  name: 'sadmin-rent-dress-dress_id',
+                  params: {
+                    dress_id: 'new',
+                  },
+                })
+              "
+            >
+              {{ $t("admin.dress_add_new") }}
+            </NuxtLink>
+          </div>
           <table
             class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
           >
@@ -29,9 +45,15 @@ await store.loadDressCatalog({});
                     <label for="checkbox-all" class="sr-only">checkbox</label>
                   </div>
                 </th>
-                <th scope="col" class="px-4 py-3">Product</th>
-                <th scope="col" class="px-4 py-3">Category</th>
-                <th scope="col" class="px-4 py-3">Stock</th>
+                <th scope="col" class="px-4 py-3">
+                  {{ $t("admin.dress_title") }}
+                </th>
+                <th scope="col" class="px-4 py-3">
+                  {{ $t("admin.dress_categories") }}
+                </th>
+                <th scope="col" class="px-4 py-3">
+                  {{ $t("admin.dress_quantity") }}
+                </th>
                 <th scope="col" class="px-4 py-3">Sales/Day</th>
                 <th scope="col" class="px-4 py-3">Sales/Month</th>
                 <th scope="col" class="px-4 py-3">Rating</th>
@@ -101,10 +123,10 @@ await store.loadDressCatalog({});
                   class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
                   <div class="flex items-center">
-                    <div
+                    <!-- <div
                       class="inline-block w-4 h-4 mr-2 bg-red-700 rounded-full"
-                    ></div>
-                    95
+                    ></div> -->
+                    {{ dress.quantity }}
                   </div>
                 </td>
                 <td

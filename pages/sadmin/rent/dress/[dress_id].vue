@@ -1,40 +1,16 @@
 <script setup>
-import { useLangStore } from "~/stores/LangStore";
 import { useAdminRentDressCatalogStore } from "~/stores/admin/DressCatalogRentAdmin";
-const storeLang = useLangStore();
+import { reactive } from "vue";
+
+const dress_id = useRoute().params.dress_id;
+
 const storeDressCatalog = useAdminRentDressCatalogStore();
 storeDressCatalog.getCategories();
 storeDressCatalog.getColors();
 storeDressCatalog.getSizes();
-
-const dress_id = useRoute().params.dress_id;
 await storeDressCatalog.getDress(dress_id);
 
-const form = ref({
-  dress_id,
-  quantity: storeDressCatalog.dress?.quantity || 0,
-  categories:
-    storeDressCatalog.dress?.categories.map(
-      (category) => category.category_id
-    ) || [],
-  colors: storeDressCatalog.dress?.colors.map((color) => color.color_id) || [],
-  sizes: storeDressCatalog.dress?.sizes.map((size) => size.size_id) || [],
-  translations: [],
-  photos: storeDressCatalog.dress?.photos.map((photo) => photo.image) || [],
-});
-
-if (storeDressCatalog?.dress?.translations.length)
-  storeLang.languages.map((language) => {
-    const translation = storeDressCatalog.dress.translations.find(
-      ({ language: locale }) => locale == language.locale
-    );
-    form.value.translations.push({
-      locale: language.locale,
-      title: translation?.title || "",
-      description: translation?.description || "",
-      placeholder: language.title,
-    });
-  });
+const form = reactive(storeDressCatalog.form);
 
 const categories = computed(() => storeDressCatalog.categories);
 const colors = computed(() => storeDressCatalog.colors);
@@ -54,8 +30,7 @@ const previewImage = (event) => {
     reader.readAsDataURL(file);
   });
 };
-
-console.log("form", form.value);
+console.log("form", form);
 </script>
 <template>
   <div>
@@ -265,7 +240,11 @@ console.log("form", form.value);
         type="submit"
         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       >
-        {{ $t("admin.dress_save_button") }}
+        {{
+          form.dress_id
+            ? $t("admin.dress_update_button")
+            : $t("admin.dress_save_button")
+        }}
       </button>
     </form>
   </div>

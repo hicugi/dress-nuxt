@@ -73,6 +73,7 @@
     "dress_booking_save_success_send_to_messenger_button": "Отправить информацию в мессенджер"
   },
   "admin": {
+    "dress_add_new": "Добавить новую услугу",
     "dress_title": "Заголовок",
     "dress_description": "Описание",
     "dress_categories": "Категории",
@@ -80,6 +81,7 @@
     "dress_colors": "Цвета",
     "dress_sizes": "Размеры",
     "dress_photos": "Фотографии",
-    "dress_save_button": "Сохранить"
+    "dress_save_button": "Сохранить",
+    "dress_update_button": "Обновить"
   }
 }

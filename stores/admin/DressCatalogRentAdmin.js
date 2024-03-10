@@ -14,6 +14,20 @@ export const useAdminRentDressCatalogStore = defineStore(
       sizes: [],
       dresses: [],
       dress: null,
+      form: {
+        dress_id: null,
+        quantity: 0,
+        categories: [],
+        colors: [],
+        sizes: [],
+        translations: useLangStore().languages.map((language) => ({
+          locale: language.locale,
+          title: "",
+          description: "",
+          placeholder: language.title,
+        })),
+        photos: [],
+      },
       errors: [],
     }),
     actions: {
@@ -33,19 +47,49 @@ export const useAdminRentDressCatalogStore = defineStore(
       },
 
       async getDress(dress_id) {
-        await useApiFetch("v1/admin/rent/dress", { params: { dress_id } }).then(
-          ({ data, error }) => {
-            if (data) this.dress = data.data;
-            else if (error) {
-              this.errors = error.data;
+        if (dress_id != "new")
+          await useApiFetch("v1/admin/rent/dress", {
+            params: { dress_id },
+          }).then(({ data, error, errors }) => {
+            if (data) {
+              const dress = data.data;
+
+              const form = {
+                dress_id: dress.dress_id,
+                quantity: dress.quantity || 0,
+                categories: dress.categories.map(
+                  (category) => category.category_id
+                ),
+                colors: dress.colors.map((color) => color.color_id),
+                sizes: dress.sizes.map((size) => size.size_id),
+                translations: [],
+                photos: dress.photos.map((photo) => photo.image),
+              };
+
+              useLangStore().languages.map((language) => {
+                const translation = dress.translations.find(
+                  ({ language: locale }) => locale == language.locale
+                );
+                form.translations.push({
+                  locale: language.locale,
+                  title: translation?.title || "",
+                  description: translation?.description || "",
+                  placeholder: language.title,
+                });
+
+                this.$patch({ dress, form });
+              });
+            } else if (errors) {
+              this.errors = errors;
             }
-          }
-        );
+          });
       },
 
       async saveDress(form, e) {
         const formData = new FormData();
         this.errors = [];
+
+        formData.append("dress_id", form.dress_id ?? undefined);
 
         form.translations.forEach((translation) => {
           formData.append(
@@ -67,10 +111,13 @@ export const useAdminRentDressCatalogStore = defineStore(
         form.colors.map((color) => formData.append("colors[]", color));
         form.sizes.map((size) => formData.append("sizes[]", size));
 
-        await useFetchFront("v1/admin/rent/dress/save", {
-          method: "POST",
-          body: formData,
-        }).then(({ data, error, errors }) => {
+        await useFetchFront(
+          "v1/admin/rent/dress/" + (form.dress_id ? "update" : "save"),
+          {
+            method: "POST",
+            body: formData,
+          }
+        ).then(({ data, error, errors }) => {
           console.log("saveDress", form, data, error, errors);
           if (errors) this.errors = errors;
         });
