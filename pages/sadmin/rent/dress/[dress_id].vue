@@ -1,6 +1,6 @@
 <script setup>
 import { useAdminRentDressCatalogStore } from "~/stores/admin/DressCatalogRentAdmin";
-import { reactive } from "vue";
+import { storeToRefs } from "pinia";
 
 const dress_id = useRoute().params.dress_id;
 
@@ -10,7 +10,7 @@ storeDressCatalog.getColors();
 storeDressCatalog.getSizes();
 await storeDressCatalog.getDress(dress_id);
 
-const form = reactive(storeDressCatalog.form);
+const { form } = storeToRefs(storeDressCatalog);
 
 const categories = computed(() => storeDressCatalog.categories);
 const colors = computed(() => storeDressCatalog.colors);
@@ -23,7 +23,7 @@ const previewImage = (event) => {
     const reader = new FileReader();
 
     reader.onload = (e) => {
-      console.log("e", e);
+      //console.log("e", e);
       form.value.photos.push(e.target.result);
     };
 

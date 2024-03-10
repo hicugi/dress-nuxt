@@ -3,7 +3,7 @@ import { useAuthStore } from "~/stores/AuthStore";
 export const useFetchFront = async (url, options = {}) => {
   const config = useRuntimeConfig();
   const accessToken = useCookie("access_token");
-  console.log("useCookie accessToken", accessToken.value);
+  //console.log("useCookie accessToken", accessToken.value);
   const { data, error, errors } = await $fetch(url, {
     baseURL: config.public.NUXT_API_URL,
     ...options,

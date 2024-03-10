@@ -7,7 +7,7 @@ export async function useApiFetch<T>(
   options: UseFetchOptions<T> = {}
 ) {
   const accessToken = useCookie("access_token");
-  console.log("useCookie accessToken", accessToken.value);
+  //console.log("useCookie accessToken", accessToken.value);
   const config = useRuntimeConfig();
 
   const defaults: UseFetchOptions<T> = {
