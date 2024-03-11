@@ -71,6 +71,7 @@ const previewImage = (event) => {
           </div>
         </div>
       </div>
+
       <div class="mb-6">
         <label
           for="message"
@@ -111,7 +112,9 @@ const previewImage = (event) => {
         </div>
       </div>
 
-      <div class="mb-6">
+      <hr class="my-3" />
+
+      <div class="">
         <label
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >{{ $t("admin.dress_price") }}</label
@@ -155,7 +158,9 @@ const previewImage = (event) => {
         </div>
       </div>
 
-      <div class="mb-5">
+      <hr class="my-3" />
+
+      <div class="">
         <label
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >{{ $t("admin.dress_quantity") }}</label
@@ -180,7 +185,9 @@ const previewImage = (event) => {
         </div>
       </div>
 
-      <div class="mb-5">
+      <hr class="my-3" />
+
+      <div class="">
         <label
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >{{ $t("admin.dress_categories") }}</label
@@ -212,7 +219,9 @@ const previewImage = (event) => {
         </div>
       </div>
 
-      <div class="mb-5">
+      <hr class="my-3" />
+
+      <div class="">
         <label
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >{{ $t("admin.dress_colors") }}</label
@@ -248,7 +257,9 @@ const previewImage = (event) => {
         </div>
       </div>
 
-      <div class="mb-5">
+      <hr class="my-3" />
+
+      <div class="">
         <label
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >{{ $t("admin.dress_sizes") }}</label
@@ -278,9 +289,11 @@ const previewImage = (event) => {
         </div>
       </div>
 
-      <div class="mb-5">
+      <hr class="my-3" />
+
+      <div class="mb-3">
         <input type="file" @change="previewImage" accept="image/*" multiple />
-        <div class="flex py-2">
+        <div class="flex pt-2">
           <img v-for="photo in form.photos" :src="photo" class="w-50 mr-2" />
         </div>
       </div>

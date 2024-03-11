@@ -69,7 +69,7 @@ export const useAdminRentDressCatalogStore = defineStore(
                 sizes: dress.sizes.map((size) => size.size_id),
                 translations: [],
                 prices: [],
-                photos: dress.photos.map((photo) => photo.image),
+                photos: dress.photos.map((photo) => photo.image_small),
               };
 
               useLangStore().languages.map((language) => {
@@ -156,8 +156,12 @@ export const useAdminRentDressCatalogStore = defineStore(
             body: formData,
           }
         ).then(({ data, error, errors }) => {
-          console.log("saveDress", form, data, error, errors);
-          if (errors) this.errors = errors;
+          //console.log("saveDress", form, data, error, errors);
+          this.errors = errors;
+          if (data)
+            navigateTo({
+              name: "sadmin-rent-dress___" + useLangStore().currentLocale,
+            });
         });
       },
 

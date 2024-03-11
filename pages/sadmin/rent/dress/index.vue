@@ -54,12 +54,16 @@ store.loadDressCatalog({});
                 <th scope="col" class="px-4 py-3">
                   {{ $t("admin.dress_quantity") }}
                 </th>
-                <th scope="col" class="px-4 py-3">Sales/Day</th>
+                <th scope="col" class="px-4 py-3">
+                  {{ $t("admin.dress_price") }}
+                </th>
                 <th scope="col" class="px-4 py-3">Sales/Month</th>
                 <th scope="col" class="px-4 py-3">Rating</th>
                 <th scope="col" class="px-4 py-3">Sales</th>
                 <th scope="col" class="px-4 py-3">Revenue</th>
-                <th scope="col" class="px-4 py-3">Last Update</th>
+                <th scope="col" class="px-4 py-3">
+                  {{ $t("admin.dress_updatedat") }}
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -132,7 +136,9 @@ store.loadDressCatalog({});
                 <td
                   class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
-                  1.47
+                  <div v-for="price in dress.prices">
+                    <div>{{ price.symbol }} {{ price.price }}</div>
+                  </div>
                 </td>
                 <td
                   class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
