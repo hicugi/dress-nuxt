@@ -47,23 +47,21 @@ const previewImage = (event) => {
           >
             <input
               :name="`translations[${translation.locale}]`"
-              :value="translation.title"
-              @input="translation.title = $event.target.value"
+              v-model="translation.title"
               :key="key"
               class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-300 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               :placeholder="translation.placeholder"
-              :class="
-                errors?.[`translations.${translation.locale}.title`]
-                  ? 'border-red-500 bg-red-50'
-                  : ''
-              "
+              :class="{
+                'border-red-500 bg-red-50':
+                  errors[`translations.${translation.locale}.title`],
+              }"
             />
             <div
-              v-if="errors?.[`translations.${translation.locale}.title`]"
+              v-if="errors[`translations.${translation.locale}.title`]"
               class="mt-2 text-sm font-medium text-red-600 dark:text-red-500"
             >
               {{
-                errors?.[`translations.${translation.locale}.title`]
+                errors[`translations.${translation.locale}.title`]
                   .map((item) => $t(`validation.${item}`))
                   .join(",")
               }}
@@ -85,25 +83,23 @@ const previewImage = (event) => {
           >
             <textarea
               :name="`translations[${translation.locale}]`"
-              :value="translation.description"
-              @input="translation.description = $event.target.value"
+              v-model="translation.description"
               :key="key"
               id="message"
               rows="10"
               class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 placeholder-gray-300 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               :placeholder="translation.placeholder"
-              :class="
-                errors?.[`translations.${translation.locale}.description`]
-                  ? 'border-red-500 bg-red-50'
-                  : ''
-              "
+              :class="{
+                'border-red-500 bg-red-50':
+                  errors[`translations.${translation.locale}.description`],
+              }"
             />
             <div
-              v-if="errors?.[`translations.${translation.locale}.description`]"
+              v-if="errors[`translations.${translation.locale}.description`]"
               class="mt-2 text-sm font-medium text-red-600 dark:text-red-500"
             >
               {{
-                errors?.[`translations.${translation.locale}.description`]
+                errors[`translations.${translation.locale}.description`]
                   .map((item) => $t(`validation.${item}`))
                   .join(",")
               }}
@@ -132,24 +128,23 @@ const previewImage = (event) => {
               <input
                 type="number"
                 :name="`price[${price.currency.code}]`"
-                :value="price.price"
-                @input="price.price = $event.target.value"
+                v-model="price.price"
                 :key="key"
+                :min="0"
                 class="w-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-300 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 :placeholder="price.currency.title"
-                :class="
-                  errors?.[`prices.${price.currency.code}`]
-                    ? 'border-red-500 bg-red-50'
-                    : ''
-                "
+                :class="{
+                  'border-red-500 bg-red-50':
+                    errors[`prices.${price.currency.code}`],
+                }"
               />
             </div>
             <div
-              v-if="errors?.[`prices.${price.currency.code}`]"
+              v-if="errors[`prices.${price.currency.code}`]"
               class="mt-2 text-sm font-medium text-red-600 dark:text-red-500"
             >
               {{
-                errors?.[`prices.${price.currency.code}`]
+                errors[`prices.${price.currency.code}`]
                   .map((item) => $t(`validation.${item}`))
                   .join(",")
               }}
@@ -172,7 +167,7 @@ const previewImage = (event) => {
             id="quantity"
             class="w-30 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-300 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             :placeholder="$t(`admin.dress_quantity`)"
-            :class="errors?.quantity ? 'border-red-500 bg-red-50' : ''"
+            :class="{ 'border-red-500 bg-red-50': errors?.quantity }"
           />
           <div
             v-if="errors?.quantity"
