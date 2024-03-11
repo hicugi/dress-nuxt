@@ -22,7 +22,7 @@ const changePhotoSelectedIndex = (index) => {
 useMetaSeo({
   title: dress.value.title,
   description: dress.value.description,
-  imgPath: dress.value?.photos?.[0]?.image || undefined,
+  imgPath: dress.value?.photos?.[0]?.image_small || undefined,
 });
 </script>
 
@@ -46,9 +46,9 @@ useMetaSeo({
             :alt="dress.title"
           />
           <ul class="mt-1 flex gap-5 <sm:gap-2">
-            <li v-for="(photo, key) in dress.photo" :key="key" class="h-50">
+            <li v-for="(photo, key) in dress.photos" :key="key" class="h-50">
               <img
-                :src="photo.image"
+                :src="photo.image_small"
                 placeholder="/img/placeholder.gif"
                 class="aspect-square w-full h-full rounded-xl object-cover cursor-pointer"
                 @click="changePhotoSelectedIndex(key)"
@@ -86,6 +86,7 @@ useMetaSeo({
                 v-for="color in dress.colors"
                 :for="'color_' + color.color"
                 class="cursor-pointer ml-1"
+                :title="color.title"
               >
                 <input
                   type="radio"

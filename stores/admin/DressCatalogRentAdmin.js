@@ -27,6 +27,7 @@ export const useAdminRentDressCatalogStore = defineStore(
           placeholder: language.title,
         })),
         photos: [],
+        photos2: [],
       },
       errors: [],
     }),
@@ -110,6 +111,24 @@ export const useAdminRentDressCatalogStore = defineStore(
 
         form.colors.map((color) => formData.append("colors[]", color));
         form.sizes.map((size) => formData.append("sizes[]", size));
+        // await form.photos.map((photo, index) => {
+        //   console.log(photo);
+        //   //const file = DataURIToBlob(photo);
+        //   //console.log(file);
+
+        //   fetch(photo)
+        //     .then((res) => res.blob())
+        //     .then((blob) => {
+        //       console.log(blob);
+        //       const file = new File([blob], `${index}.jpg`);
+        //       formData.append("photos", file);
+        //     });
+        // });
+
+        form.photos2.map((photo) => {
+          console.log(photo);
+          formData.append("photos[]", photo);
+        });
 
         await useFetchFront(
           "v1/admin/rent/dress/" + (form.dress_id ? "update" : "save"),

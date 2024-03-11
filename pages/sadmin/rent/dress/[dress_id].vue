@@ -20,6 +20,7 @@ const errors = computed(() => storeDressCatalog.errors);
 const previewImage = (event) => {
   Object.keys(event.target.files).forEach((key) => {
     const file = event.target.files[key];
+    form.value.photos2.push(file);
     const reader = new FileReader();
 
     reader.onload = (e) => {
@@ -30,7 +31,6 @@ const previewImage = (event) => {
     reader.readAsDataURL(file);
   });
 };
-console.log("form", form);
 </script>
 <template>
   <div>
@@ -181,7 +181,7 @@ console.log("form", form);
         </div>
 
         <div class="w-full flex flex-wrap items-center mb-4">
-          <div v-for="color in colors" class="w-1/3">
+          <div v-for="color in colors" class="w-1/3 flex">
             <input
               type="checkbox"
               v-model="form.colors"
@@ -192,9 +192,13 @@ console.log("form", form);
             />
             <label
               :for="`color[${color.color_id}]`"
-              class="ml-1 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              class="ml-1 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex mb-2"
             >
-              {{ color.title }}
+              <span
+                class="w-5 mx-2 rounded-full border"
+                :style="`background-color: ${color.color}`"
+              />
+              <span>{{ color.title }}</span>
             </label>
           </div>
         </div>

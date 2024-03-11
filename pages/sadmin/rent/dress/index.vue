@@ -107,7 +107,7 @@ store.loadDressCatalog({});
                       :key="index"
                       class="h-auto w-1/6"
                     >
-                      <img :src="photo.image" />
+                      <img :src="photo.image_small" />
                     </div>
                   </div>
                 </th>

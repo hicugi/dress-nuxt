@@ -35,7 +35,7 @@ export default {
         <img
           v-if="dress.photos.length > 0"
           class="group-hover:scale-110 transform duration-1000 object-cover w-full h-full"
-          :src="dress.photos[0].image"
+          :src="dress.photos[0].image_small"
           :alt="dress.title"
           placeholder="/img/placeholder.gif"
         />

@@ -98,7 +98,7 @@ export default defineNuxtConfig({
   },
   ssr: true,
   sitemap: {
-    enabled: true,
+    enabled: false,
     autoI18n: false,
     xsl: false,
     urls: async () => {
