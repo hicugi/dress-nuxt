@@ -52,7 +52,11 @@ export const useAdminRentDressCatalogStore = defineStore(
       },
 
       async getDress(dress_id) {
-        if (dress_id != "new")
+        if (dress_id == "new") {
+          const { categories, colors, sizes } = this;
+          this.$reset({});
+          this.$patch({ categories, colors, sizes });
+        } else
           await useApiFetch("v1/admin/rent/dress", {
             params: { dress_id },
           }).then(({ data, error, errors }) => {
@@ -88,6 +92,7 @@ export const useAdminRentDressCatalogStore = defineStore(
                   };
                 }),
                 photos: dress.photos.map((photo) => photo.image_small),
+                photos2: [],
               };
 
               this.$patch({ dress, form });
