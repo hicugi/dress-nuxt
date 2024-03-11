@@ -73,7 +73,7 @@
     "dress_booking_save_success_send_to_messenger_button": "Отправить информацию в мессенджер"
   },
   "admin": {
-    "dress_add_new": "Добавить новую услугу",
+    "dress_add_new": "Добавить",
     "dress_title": "Заголовок",
     "dress_description": "Описание",
     "dress_price": "Цена",

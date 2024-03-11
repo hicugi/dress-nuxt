@@ -41,6 +41,7 @@
     "validation_field_date_format_invalid_m/Y": "Invalid date format mm/yyyy",
     "validation_field_date_invalid": "Invalid date format",
     "validation_field_alpha_dash_invalid": "Only letters, numbers and underscores are allowed",
+    "validation_field_present": "The field must be present in the request",
 
     "dress_booking_save_dress_quantity_less_then_needed": "There are not enough available items to book"
   },
@@ -69,5 +70,19 @@
     "dress_booking_save_success": "The item has been successfully reserved for the specified date.",
     "dress_booking_save_success_send_to_messenger": "To speed up the booking process, please send information about it to us in messenger by clicking on the button below",
     "dress_booking_save_success_send_to_messenger_button": "Send information to messenger"
+  },
+  "admin": {
+    "dress_add_new": "Add new service",
+    "dress_title": "Title",
+    "dress_description": "Description",
+    "dress_price": "Price",
+    "dress_categories": "Categories",
+    "dress_quantity": "Quantity",
+    "dress_updatedat": "Updated",
+    "dress_colors": "Colors",
+    "dress_sizes": "Dimensions",
+    "dress_photos": "Photos",
+    "dress_save_button": "Save",
+    "dress_update_button": "Update"
   }
 }

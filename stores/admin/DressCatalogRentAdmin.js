@@ -24,7 +24,7 @@ export const useAdminRentDressCatalogStore = defineStore(
         })),
         prices: useCurrencyStore().currencies.map((currency) => ({
           currency,
-          price: "",
+          price: 0,
         })),
         quantity: 0,
         categories: [],
@@ -67,32 +67,28 @@ export const useAdminRentDressCatalogStore = defineStore(
                 ),
                 colors: dress.colors.map((color) => color.color_id),
                 sizes: dress.sizes.map((size) => size.size_id),
-                translations: [],
-                prices: [],
+                translations: useLangStore().languages.map((language) => {
+                  const translation = dress.translations.find(
+                    ({ language: locale }) => locale == language.locale
+                  );
+                  return {
+                    locale: language.locale,
+                    title: translation?.title || "",
+                    description: translation?.description || "",
+                    placeholder: language.title,
+                  };
+                }),
+                prices: useCurrencyStore().currencies.map((currency) => {
+                  const price = dress.prices.find(
+                    ({ code }) => code == currency.code
+                  );
+                  return {
+                    currency,
+                    price: price?.price || 0,
+                  };
+                }),
                 photos: dress.photos.map((photo) => photo.image_small),
               };
-
-              useLangStore().languages.map((language) => {
-                const translation = dress.translations.find(
-                  ({ language: locale }) => locale == language.locale
-                );
-                form.translations.push({
-                  locale: language.locale,
-                  title: translation?.title || "",
-                  description: translation?.description || "",
-                  placeholder: language.title,
-                });
-              });
-
-              useCurrencyStore().currencies.map((currency) => {
-                const price = dress.prices.find(
-                  ({ code }) => code == currency.code
-                );
-                form.prices.push({
-                  currency,
-                  price: price?.price || "",
-                });
-              });
 
               this.$patch({ dress, form });
             } else if (errors) {

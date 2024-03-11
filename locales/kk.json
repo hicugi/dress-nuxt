@@ -41,6 +41,7 @@
     "validation_field_date_format_invalid_m/Y": "Жарамсыз күн пішімі мм/жжж",
     "validation_field_date_invalid": "Жарамсыз күн пішімі",
     "validation_field_alpha_dash_invalid": "Тек әріптер, сандар және астын сызуларға рұқсат етіледі",
+    "validation_field_present": "Өріс сұрауда болуы керек",
 
     "dress_booking_save_dress_quantity_less_then_needed": "Брондау үшін қолжетімді элементтер жеткіліксіз"
   },
@@ -69,5 +70,19 @@
     "dress_booking_save_success": "Элемент көрсетілген күнге сәтті резервтелді.",
     "dress_booking_save_success_send_to_messenger": "Брондау процесін жылдамдату үшін төмендегі түймені басу арқылы ол туралы ақпаратты бізге мессенжерде жіберіңіз",
     "dress_booking_save_success_send_to_messenger_button": "Ақпаратты мессенджерге жіберіңіз"
+  },
+  "admin": {
+    "dress_add_new": "Жаңа қызмет қосу",
+    "dress_title": "Тақырып",
+    "dress_description": "Сипаттамасы",
+    "dress_price": "Баға",
+    "dress_categories": "Санаттар",
+    "dress_quantity": "Саны",
+    "dress_updatedat": "Жаңартылған",
+    "dress_colors": "Түстер",
+    "dress_sizes": "Өлшемдер",
+    "dress_photos": "Фотосуреттер",
+    "dress_save_button": "Сақтау",
+    "dress_update_button": "Жаңарту"
   }
 }
