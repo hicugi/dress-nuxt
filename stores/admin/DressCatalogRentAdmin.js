@@ -23,10 +23,7 @@ export const useAdminRentDressCatalogStore = defineStore(
           placeholder: language.title,
         })),
         prices: useCurrencyStore().currencies.map((currency) => ({
-          currency: {
-            title: currency.title,
-            code: currency.code,
-          },
+          currency,
           price: "",
         })),
         quantity: 0,
@@ -71,6 +68,7 @@ export const useAdminRentDressCatalogStore = defineStore(
                 colors: dress.colors.map((color) => color.color_id),
                 sizes: dress.sizes.map((size) => size.size_id),
                 translations: [],
+                prices: [],
                 photos: dress.photos.map((photo) => photo.image),
               };
 
@@ -84,9 +82,19 @@ export const useAdminRentDressCatalogStore = defineStore(
                   description: translation?.description || "",
                   placeholder: language.title,
                 });
-
-                this.$patch({ dress, form });
               });
+
+              useCurrencyStore().currencies.map((currency) => {
+                const price = dress.prices.find(
+                  ({ code }) => code == currency.code
+                );
+                form.prices.push({
+                  currency,
+                  price: price?.price || "",
+                });
+              });
+
+              this.$patch({ dress, form });
             } else if (errors) {
               this.errors = errors;
             }

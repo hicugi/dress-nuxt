@@ -124,20 +124,23 @@ const previewImage = (event) => {
         </div>
         <div class="flex w-full">
           <div v-for="(price, key) in form.prices" class="mr-2 w-1/3">
-            <input
-              type="number"
-              :name="`price[${price.currency.code}]`"
-              :value="price.price"
-              @input="price.price = $event.target.value"
-              :key="key"
-              class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-300 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              :placeholder="price.currency.title"
-              :class="
-                errors?.[`prices.${price.currency.code}`]
-                  ? 'border-red-500 bg-red-50'
-                  : ''
-              "
-            />
+            <div class="flex items-center">
+              <span class="mr-1">{{ price.currency.symbol }}</span>
+              <input
+                type="number"
+                :name="`price[${price.currency.code}]`"
+                :value="price.price"
+                @input="price.price = $event.target.value"
+                :key="key"
+                class="w-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-300 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                :placeholder="price.currency.title"
+                :class="
+                  errors?.[`prices.${price.currency.code}`]
+                    ? 'border-red-500 bg-red-50'
+                    : ''
+                "
+              />
+            </div>
             <div
               v-if="errors?.[`prices.${price.currency.code}`]"
               class="mt-2 text-sm font-medium text-red-600 dark:text-red-500"
