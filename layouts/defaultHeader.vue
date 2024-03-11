@@ -26,11 +26,10 @@ export default {
         },
       ],
     });
-    this.loadCurrencies();
   },
   methods: {
     ...mapActions(useLangStore, ["setLocale"]),
-    ...mapActions(useCurrencyStore, ["loadCurrencies", "setCurrency"]),
+    ...mapActions(useCurrencyStore, ["setCurrency"]),
   },
   computed: {
     ...mapState(useLangStore, ["languages", "currentLang"]),

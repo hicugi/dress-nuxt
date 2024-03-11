@@ -16,16 +16,23 @@ export const useAdminRentDressCatalogStore = defineStore(
       dress: null,
       form: {
         dress_id: null,
-        quantity: 0,
-        categories: [],
-        colors: [],
-        sizes: [],
         translations: useLangStore().languages.map((language) => ({
           locale: language.locale,
           title: "",
           description: "",
           placeholder: language.title,
         })),
+        prices: useCurrencyStore().currencies.map((currency) => ({
+          currency: {
+            title: currency.title,
+            code: currency.code,
+          },
+          price: "",
+        })),
+        quantity: 0,
+        categories: [],
+        colors: [],
+        sizes: [],
         photos: [],
         photos2: [],
       },
@@ -101,6 +108,10 @@ export const useAdminRentDressCatalogStore = defineStore(
             `translations[${translation.locale}][description]`,
             translation.description
           );
+        });
+
+        form.prices.forEach((item) => {
+          formData.append(`prices[${item.currency.code}]`, item.price);
         });
 
         formData.append("quantity", form.quantity);

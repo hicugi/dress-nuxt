@@ -1,22 +1,10 @@
-<script>
-import { mapActions } from "pinia";
+<script setup>
 import Header from "./defaultHeader.vue";
 import { useLangStore } from "~/stores/LangStore.js";
+import { useCurrencyStore } from "~/stores/CurrencyStore.js";
 
-export default {
-  components: {
-    Header,
-  },
-  data() {
-    return {};
-  },
-  created() {
-    this.loadLanguages();
-  },
-  methods: {
-    ...mapActions(useLangStore, ["loadLanguages", "setLocale"]),
-  },
-};
+useLangStore().loadLanguages();
+useCurrencyStore().loadCurrencies();
 </script>
 <template>
   <div>

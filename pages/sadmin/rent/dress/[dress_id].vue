@@ -111,6 +111,47 @@ const previewImage = (event) => {
         </div>
       </div>
 
+      <div class="mb-6">
+        <label
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >{{ $t("admin.dress_price") }}</label
+        >
+        <div
+          v-if="errors?.prices"
+          class="text-sm mb-2 font-medium text-red-600 dark:text-red-500"
+        >
+          {{ errors.prices.map((item) => $t(`validation.${item}`)).join(",") }}
+        </div>
+        <div class="flex w-full">
+          <div v-for="(price, key) in form.prices" class="mr-2 w-1/3">
+            <input
+              type="number"
+              :name="`price[${price.currency.code}]`"
+              :value="price.price"
+              @input="price.price = $event.target.value"
+              :key="key"
+              class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-300 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              :placeholder="price.currency.title"
+              :class="
+                errors?.[`prices.${price.currency.code}`]
+                  ? 'border-red-500 bg-red-50'
+                  : ''
+              "
+            />
+            <div
+              v-if="errors?.[`prices.${price.currency.code}`]"
+              class="mt-2 text-sm font-medium text-red-600 dark:text-red-500"
+            >
+              {{
+                errors?.[`prices.${price.currency.code}`]
+                  .map((item) => $t(`validation.${item}`))
+                  .join(",")
+              }}
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="mb-5">
         <label
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -236,7 +277,7 @@ const previewImage = (event) => {
 
       <div class="mb-5">
         <input type="file" @change="previewImage" accept="image/*" multiple />
-        <div class="flex">
+        <div class="flex py-2">
           <img v-for="photo in form.photos" :src="photo" class="w-50 mr-2" />
         </div>
       </div>
