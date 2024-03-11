@@ -22,7 +22,7 @@ const changePhotoSelectedIndex = (index) => {
 useMetaSeo({
   title: dress.value.title,
   description: dress.value.description,
-  imgPath: dress.value?.photo?.[0]?.image || undefined,
+  imgPath: dress.value?.photos?.[0]?.image_small || undefined,
 });
 </script>
 
@@ -39,16 +39,16 @@ useMetaSeo({
             :lang="useI18n().locale.value"
           />
 
-          <NuxtImg
+          <img
             class="aspect-square w-full h-250 <sm:h-130 rounded-xl object-cover"
             placeholder="/img/placeholder.gif"
-            :src="dress.photo[photoSelectedIndex].image"
+            :src="dress.photos[photoSelectedIndex].image"
             :alt="dress.title"
           />
           <ul class="mt-1 flex gap-5 <sm:gap-2">
-            <li v-for="(photo, key) in dress.photo" :key="key" class="h-50">
-              <NuxtImg
-                :src="photo.image"
+            <li v-for="(photo, key) in dress.photos" :key="key" class="h-50">
+              <img
+                :src="photo.image_small"
                 placeholder="/img/placeholder.gif"
                 class="aspect-square w-full h-full rounded-xl object-cover cursor-pointer"
                 @click="changePhotoSelectedIndex(key)"
@@ -66,7 +66,7 @@ useMetaSeo({
                 {{ dress.title }}
               </h1>
               <h3 class="text-sm">
-                <Categories :categories="dress.category" />
+                <Categories :categories="dress.categories" />
               </h3>
             </div>
           </div>
@@ -78,14 +78,15 @@ useMetaSeo({
           </div>
 
           <form class="mt-4">
-            <fieldset class="flex" v-if="dress.color.length">
+            <fieldset class="flex" v-if="dress.colors.length">
               <legend class="mb-1 text-sm font-medium contents">
                 {{ $t("rent.dress_color") }}:&nbsp;
               </legend>
               <label
-                v-for="color in dress.color"
+                v-for="color in dress.colors"
                 :for="'color_' + color.color"
                 class="cursor-pointer ml-1"
+                :title="color.title"
               >
                 <input
                   type="radio"
@@ -101,12 +102,12 @@ useMetaSeo({
               </label>
             </fieldset>
 
-            <fieldset v-if="dress.size.length" class="mt-4 flex">
+            <fieldset v-if="dress.sizes.length" class="mt-4 flex">
               <legend class="text-sm font-medium contents">
                 {{ $t("rent.dress_size") }}:
               </legend>
               <label
-                v-for="size in dress.size"
+                v-for="size in dress.sizes"
                 :for="'size_' + size.size"
                 class="cursor-pointer ml-2"
               >

@@ -25,7 +25,8 @@ const description = computed(() => category.value.description);
 const dresses = computed(() => store.dresses);
 const categoryImgPath = computed(
   () =>
-    store.dresses?.[0]?.photo?.[0].image || runtimeConfig + "/img/og-image.jpg"
+    store.dresses?.[0]?.photos?.[0].image_small ||
+    runtimeConfig + "/img/og-image.jpg"
 );
 
 useMetaSeo({

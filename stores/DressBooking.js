@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
 import { defineStore } from "pinia";
 
-import axios from "~/composables/useApi";
-import useApiCore from "~/composables/useApiCore";
+import { useApiFetch } from "~/composables/useApiFetch";
+import { useFetchFront } from "~/composables/useFetchFront";
 
 export const useDressBooking = defineStore("dress-booking", {
   state: () => ({
@@ -25,15 +25,12 @@ export const useDressBooking = defineStore("dress-booking", {
   actions: {
     async getAwaylableDressDates(dress_id) {
       this.form.dress_id = dress_id;
-      await useApiCore("v1/client/rent/booking/available", {
+      await useApiFetch("v1/client/rent/booking/available", {
         params: { dress_id },
-      })
-        .then((response) => {
-          this.bookings = response.data.value.data;
-        })
-        .catch((error) => {
-          this.errors = error.response.data.errors;
-        });
+      }).then(({ data, error, errors }) => {
+        if (data) this.bookings = data.data;
+        else if (errors) this.errors = errors;
+      });
     },
     getBusyDates(date) {
       const d = dayjs(date).format("YYYY-MM-DD");
@@ -53,23 +50,24 @@ export const useDressBooking = defineStore("dress-booking", {
     saveBooking(e) {
       e.preventDefault();
       this.errors = [];
-      axios()
-        .post("/v1/client/rent/booking/save", {
+      useFetchFront("/v1/client/rent/booking/save", {
+        method: "POST",
+        params: {
           ...this.form,
           date: this.date ?? "",
-        })
-        .then((response) => {
+        },
+      }).then(({ data, error, errors }) => {
+        if (data) {
           this.$patch({
-            booking: response.data.data,
+            booking: data.data,
             success: true,
           });
           if (process.client) {
             localStorage.setItem("email", this.form.email);
             localStorage.setItem("phone_number", this.form.phone_number);
           }
-        })
-        .catch((error) => {
-          this.errors = error.response.data.errors;
+        } else if (errors) {
+          this.errors = errors;
           if (
             this.errors?.quantity?.includes(
               "dress_booking_save_dress_quantity_less_then_needed"
@@ -82,7 +80,8 @@ export const useDressBooking = defineStore("dress-booking", {
               });
             });
           }
-        });
+        }
+      });
     },
   },
 });

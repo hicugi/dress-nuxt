@@ -2,6 +2,7 @@
   "validation": {
     "auth_login_error_incorrect_email": "Неверный имеил",
     "auth_login_error_incorrect_password": "Неверный пароль",
+    "auth_login_user_not_found": "Пользователь не найден",
     "validation_field_required": "Заполните поле",
     "validation_field_required_with": "Заполните поле",
     "validation_field_required_without": "Заполните поле",
@@ -41,6 +42,7 @@
     "validation_field_date_format_invalid_m/Y": "Некорректный формат даты мм/гггг",
     "validation_field_date_invalid": "Неверный формат даты",
     "validation_field_alpha_dash_invalid": "Разрешены только буквы, цифры и подчеркивания",
+    "validation_field_present": "Поле должно присутстовать в запросе",
 
     "dress_booking_save_dress_quantity_less_then_needed": "Недостаточно свободного товара для бронирования"
   },
@@ -69,5 +71,19 @@
     "dress_booking_save_success": "Товар успешно заброванирован на указанную дату.",
     "dress_booking_save_success_send_to_messenger": "Для ускорения процесса бронирования скиньте пожалуйста информацию о нем к нам в месенджер, нажав на кнопку ниже",
     "dress_booking_save_success_send_to_messenger_button": "Отправить информацию в мессенджер"
+  },
+  "admin": {
+    "dress_add_new": "Добавить",
+    "dress_title": "Заголовок",
+    "dress_description": "Описание",
+    "dress_price": "Цена",
+    "dress_categories": "Категории",
+    "dress_quantity": "Количество",
+    "dress_updatedat": "Обновлено",
+    "dress_colors": "Цвета",
+    "dress_sizes": "Размеры",
+    "dress_photos": "Фотографии",
+    "dress_save_button": "Сохранить",
+    "dress_update_button": "Обновить"
   }
 }

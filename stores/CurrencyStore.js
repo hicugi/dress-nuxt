@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
-import useApiCore from "~/composables/useApiCore";
+
+import { useApiFetch } from "~/composables/useApiFetch";
 
 export const useCurrencyStore = defineStore("currency-store", {
   state: () => ({
@@ -15,10 +16,10 @@ export const useCurrencyStore = defineStore("currency-store", {
   }),
   actions: {
     async loadCurrencies() {
-      await useApiCore("v1/currency/list")
-        .then((response) => {
+      await useApiFetch("v1/currency/list").then(({ data, error, errors }) => {
+        if (data) {
           let patch = {
-            currencies: [...response.data.value.data],
+            currencies: [...data.data],
           };
 
           const currentCurrency = patch.currencies.find((currency) => {
@@ -31,11 +32,9 @@ export const useCurrencyStore = defineStore("currency-store", {
           }
 
           this.$patch(patch);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.errors = error.response.data.errors;
-        });
+        }
+        this.errors = errors;
+      });
     },
     setCurrency(currency, redirect = true) {
       if (process.client) localStorage.setItem("currencyCode", currency.code);

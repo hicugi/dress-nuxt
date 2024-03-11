@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
-import useApiCore from "~/composables/useApiCore";
+
+import { useApiFetch } from "~/composables/useApiFetch";
 
 export const useLangStore = defineStore("lang-store", {
   state: () => ({
@@ -11,23 +12,22 @@ export const useLangStore = defineStore("lang-store", {
   }),
   actions: {
     async loadLanguages() {
-      useApiCore("v1/language/list")
-        .then((response) => {
-          const languages = response.data.value.data;
-          if (languages.length)
-            languages.find((currentLang) => {
-              if (currentLang.locale === this.currentLocale) {
-                this.$patch({
-                  currentLang,
-                  languages,
-                });
-              }
+      await useApiFetch("v1/language/list").then(({ data, error }) => {
+        if (error) return;
+        else if (data) {
+          const languages = data.data;
+          if (languages.length) {
+            const currentLang = languages.find(
+              (currentLang) =>
+                currentLang.locale === useLangStore().currentLocale
+            );
+            this.$patch({
+              currentLang,
+              languages,
             });
-        })
-        .catch((error) => {
-          console.log(error);
-          this.errors = error.response.data.errors;
-        });
+          }
+        }
+      });
     },
     setLocale(lang, redirect = true) {
       if (this.currentLocale == lang.locale) return;

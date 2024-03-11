@@ -13,7 +13,7 @@ export default {
       hiddenItems: true,
     };
   },
-  created() {
+  async created() {
     useHead({
       htmlAttrs: {
         lang: useI18n()?.locale?.value,
@@ -26,12 +26,10 @@ export default {
         },
       ],
     });
-    this.loadLanguages();
-    this.loadCurrencies();
   },
   methods: {
-    ...mapActions(useLangStore, ["loadLanguages", "setLocale"]),
-    ...mapActions(useCurrencyStore, ["loadCurrencies", "setCurrency"]),
+    ...mapActions(useLangStore, ["setLocale"]),
+    ...mapActions(useCurrencyStore, ["setCurrency"]),
   },
   computed: {
     ...mapState(useLangStore, ["languages", "currentLang"]),

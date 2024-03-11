@@ -26,7 +26,7 @@ export default defineNuxtConfig({
       NUXT_DEFAULT_CURRENCE_CODE:
         process.env.NUXT_DEFAULT_CURRENCE_CODE || "USD",
       NUXT_PUBLIC_SITE_URL:
-        process.env.NUXT_PUBLIC_SITE_URL || "http://localhost:3000",
+        process.env.NUXT_PUBLIC_SITE_URL || "http://localhost:3030",
       NUXT_API_URL: process.env.NUXT_API_URL || "http://localhost/api/",
       NUXT_SITE_NAME: process.env.NUXT_SITE_NAME || "Gatsby.kz",
     },
@@ -98,7 +98,7 @@ export default defineNuxtConfig({
   },
   ssr: true,
   sitemap: {
-    enabled: true,
+    enabled: false,
     autoI18n: false,
     xsl: false,
     urls: async () => {

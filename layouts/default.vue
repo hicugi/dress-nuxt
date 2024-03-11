@@ -1,14 +1,10 @@
-<script>
+<script setup>
 import Header from "./defaultHeader.vue";
+import { useLangStore } from "~/stores/LangStore.js";
+import { useCurrencyStore } from "~/stores/CurrencyStore.js";
 
-export default {
-  components: {
-    Header,
-  },
-  data() {
-    return {};
-  },
-};
+useLangStore().loadLanguages();
+useCurrencyStore().loadCurrencies();
 </script>
 <template>
   <div>
