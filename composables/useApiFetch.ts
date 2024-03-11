@@ -40,11 +40,11 @@ export async function useApiFetch<T>(
   let errors = [];
   const { data, error, status } = await useFetch(url, params);
 
-  console.log("=========");
-  console.log("apiCore", url, "status", status.value);
-  console.log("data", data.value);
-  console.log("error", error?.value?.data?.error);
-  console.log("error", error.value ? error : error.value);
+  // console.log("=========");
+  // console.log("apiCore", url, "status", status.value);
+  // console.log("data", data.value);
+  // console.log("error", error?.value?.data?.error);
+  // console.log("error", error.value ? error : error.value);
 
   if (status.value !== "success" && error.value) {
     console.log(error.value.statusCode);
@@ -82,7 +82,7 @@ export async function useApiFetch<T>(
     //       break;
     //   }
     // }
-    console.log("=========");
+    //console.log("=========");
   }
   return { data: data.value, error: error.value, status, errors };
 }
