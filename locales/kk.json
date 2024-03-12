@@ -26,6 +26,7 @@
     "validation_field_max_20": "Ең көбі 20 таңба",
     "validation_field_max_30": "Ең көбі 30 таңба",
     "validation_field_max_40": "Ең көбі 40 таңба",
+    "validation_field_max_1500": "Ең көбі 1500",
     "validation_field_not_found": "Дерекқордан табылмады",
     "validation_field_mast_be_email": "Жарамды электрондық поштаны енгізу керек",
     "validation_field_must_be_unique": "Өріс бірегей болуы керек",
