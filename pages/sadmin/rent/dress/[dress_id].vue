@@ -289,7 +289,19 @@ const previewImage = (event) => {
       <div class="mb-3">
         <input type="file" @change="previewImage" accept="image/*" multiple />
         <div class="flex pt-2">
-          <img v-for="photo in form.photos" :src="photo" class="w-50 mr-2" />
+          <div v-for="(photo, index) in form.photos" :key="index">
+            <img :src="photo" class="w-50 mr-2" />
+            <div
+              v-if="errors?.[`photos.${index}`]"
+              class="my-2 text-sm font-medium text-red-600 dark:text-red-500"
+            >
+              {{
+                errors[`photos.${index}`]
+                  .map((item) => $t(`validation.${item}`))
+                  .join(",")
+              }}
+            </div>
+          </div>
         </div>
       </div>
       <button

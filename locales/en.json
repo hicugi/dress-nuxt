@@ -26,6 +26,7 @@
     "validation_field_max_20": "Maximum 20 characters",
     "validation_field_max_30": "Maximum 30 characters",
     "validation_field_max_40": "Maximum 40 characters",
+    "validation_field_max_1500": "Maximum 1500",
     "validation_field_not_found": "Not found in the database",
     "validation_field_mast_be_email": "You must enter a valid email",
     "validation_field_must_be_unique": "The field must be unique",

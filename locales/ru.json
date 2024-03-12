@@ -27,6 +27,7 @@
     "validation_field_max_20": "Максимум 20 символов",
     "validation_field_max_30": "Максимум 30 символов",
     "validation_field_max_40": "Максимум 40 символов",
+    "validation_field_max_1500": "Максимум 1500",
     "validation_field_not_found": "Не найдено в базе",
     "validation_field_mast_be_email": "Необходимо ввести корректный email",
     "validation_field_must_be_unique": "Поле должно быть уникальным",
