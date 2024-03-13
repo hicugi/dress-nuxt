@@ -1,9 +1,26 @@
-<script setup lang="ts">
-const siteName = useRuntimeConfig().public.NUXT_SITE_NAME;
-useHead({
+<script setup>
+const { NUXT_SITE_NAME: siteName, NUXT_PUBLIC_SITE_URL: siteUrl } =
+  useRuntimeConfig().public;
+const route = useRoute();
+const i18n = useI18n();
+useHead(() => ({
   titleTemplate: (titleChunk) => {
     return titleChunk ? `${titleChunk} - ${siteName}` : `${siteName}`;
   },
+  htmlAttrs: {
+    lang: i18n?.locale?.value,
+  },
+  link: [
+    {
+      rel: "canonical",
+      href: siteUrl + route.path,
+    },
+    {
+      rel: "icon",
+      type: "image/ico",
+      href: "/favicon.ico",
+    },
+  ],
   meta: [
     {
       hid: "robots",
@@ -11,7 +28,7 @@ useHead({
       content: "index,follow",
     },
   ],
-});
+}));
 </script>
 
 <template>

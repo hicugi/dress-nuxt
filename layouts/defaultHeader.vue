@@ -13,20 +13,6 @@ export default {
       hiddenItems: true,
     };
   },
-  async created() {
-    useHead({
-      htmlAttrs: {
-        lang: useI18n()?.locale?.value,
-      },
-      link: [
-        {
-          rel: "icon",
-          type: "image/ico",
-          href: "/favicon.ico",
-        },
-      ],
-    });
-  },
   methods: {
     ...mapActions(useLangStore, ["setLocale"]),
     ...mapActions(useCurrencyStore, ["setCurrency"]),
