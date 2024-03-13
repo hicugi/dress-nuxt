@@ -6,15 +6,13 @@ const runtimeConfig = useRuntimeConfig().public.NUXT_PUBLIC_SITE_URL;
 const $t = useI18n().t;
 
 const store = useDressCatalog();
-
-if (!store.categories.length) await store.loadCategories();
+const changeLocale = store.locale != useI18n().locale.value;
+if (!store.categories.length || changeLocale) await store.loadCategories();
 
 const categories = store.categories;
-const route = useRoute();
-const findedCategory = categories.find((c) => c.slug === route.params.slug) || {
-  category_id: undefined,
-};
-await store.setCategory(findedCategory);
+const { slug } = useRoute().params;
+const findedCategory = categories.find((c) => c.slug === slug) || categories[0];
+if (!changeLocale) await store.setCategory(findedCategory);
 const category = computed(() => store.category);
 
 const title = computed(
