@@ -6,10 +6,13 @@ import useMetaSeo from "~/composables/useMetaSeo";
 const runtimeConfig = useRuntimeConfig().public.NUXT_PUBLIC_SITE_URL;
 const $t = useI18n().t;
 
-const store = useDressCatalog();
+if (
+  !useDressCatalog().categories.length ||
+  useDressCatalog().locale != useI18n().locale.value
+)
+  useDressCatalog().loadCategories();
 
-if (!store.categories.length) await store.loadCategories();
-const categories = store.categories;
+const categories = computed(() => useDressCatalog().categories);
 
 const title = computed(
   () =>
@@ -58,7 +61,7 @@ useMetaSeo({
         <template v-for="(category, index) in categories">
           <Categories :category="category" :key="index" v-if="index" />
         </template>
-        <Categories :category="categories[0]" :key="0" />
+        <Categories v-if="categories[0]" :category="categories[0]" :key="0" />
       </div>
     </div>
   </section>
