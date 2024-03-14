@@ -21,6 +21,30 @@ export default defineNuxtConfig({
   //   server: true,
   //   client: true,
   // },
+
+  // disable the <link rel="modulepreload"../> and <link rel="prefetch"../>
+  // for js & image files (will improve perfomance)
+  hooks: {
+    'build:manifest': (manifest) => {
+      const keysToRemove = []
+
+      for (const key in manifest) {
+        const file = manifest[key]
+
+        if (file.assets) {
+          file.assets = file.assets
+            .filter(
+              (asset: string) =>
+                !asset.endsWith('.js') &&
+                !asset.endsWith('.webp') &&
+                !asset.endsWith('.jpg') &&
+                !asset.endsWith('.png')
+            )
+        }
+      }
+    }
+  },
+
   runtimeConfig: {
     public: {
       NUXT_DEFAULT_CURRENCE_CODE:
